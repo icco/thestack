@@ -10,3 +10,13 @@
 
 ?>
 
+<html>
+<head>
+<title>the Stack!</title>
+</head>
+<body>
+<h1>theStack!</h1>
+<p>OMG. Content goes here.</p>
+</body>
+</head>
+
