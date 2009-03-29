@@ -17,6 +17,10 @@
 <body>
 <h1>theStack!</h1>
 <p>OMG. Content goes here.</p>
+<?php
+$temp = new Post();
+print $temp;
+?>
 </body>
 </head>
 
