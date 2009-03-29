@@ -8,7 +8,7 @@ class Post
 
 	function __toString()
 	{
-		print "New Post!";
+		return "New Post!";
 	}
 }
 
