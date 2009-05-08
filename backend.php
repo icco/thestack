@@ -2,6 +2,7 @@
 
 $text = $_GET['newTask'];
 
-file_put_contents("ToDo.txt", $text . "\n", FILE_APPEND | LOCK_EX);
+if(isset($text))
+	file_put_contents("ToDo.txt","<li> $text </li> \n", FILE_APPEND | LOCK_EX);
 
 ?>

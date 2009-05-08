@@ -34,7 +34,11 @@ include "markdown.php";
 	</form>
 
 	<div id="listArea">
-		<ol id="todo"></ol>
+		<ol id="todo">
+		<?php
+		//print file_get_contents("ToDo.txt");
+		?>
+		</ol>
 	</div>
 
 	<div id="data"/>
