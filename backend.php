@@ -1,16 +1,7 @@
 <?php
 
-class Post
-{
-	function __construct()
-	{
-	}
+$text = $_GET['newTask'];
 
-	function __toString()
-	{
-		return "New Post!";
-	}
-}
-
+file_put_contents("ToDo.txt", $text . "\n", FILE_APPEND | LOCK_EX);
 
 ?>

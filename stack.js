@@ -1,4 +1,23 @@
+// Based off of MooTools Demo
+
 window.addEvent('domready', function() {
+
+	//We can use one Request object many times.
+	var req = new Request({
+
+		url: 'getList.php',
+
+		onSuccess: function(txt){
+			$('todo').set('text', txt);
+		},
+
+		// Our request will most likely succeed, but just in case, we'll add an
+		// onFailure method which will let the user know what happened.
+		onFailure: function(){
+			$('result').set('text', 'The request failed.');
+		}
+
+	});
 
 	//This is the function that will run every time a new item is added or the 
 	//list is sorted.
@@ -41,6 +60,8 @@ window.addEvent('domready', function() {
 		//the draggable element.
 		var handle = new Element('div', {id:'handle-'+i, 'class':'drag-handle'});
 		handle.inject(li, 'top');
+		//post data...
+		$('addTask').send();
 		//Set the value of the form to '', since we've added its value to the <li>.
 		$('newTask').set('value', '');
 		//Add the <li> to our list.
@@ -53,5 +74,5 @@ window.addEvent('domready', function() {
 		showNewOrder();
 		i++;
 	});
-	
 });
+

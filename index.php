@@ -11,6 +11,7 @@
  */
 
 include "backend.php";
+include "markdown.php";
 
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -27,8 +28,8 @@ include "backend.php";
 	<h1>theStack!</h1>
 	<p>OMG. Content goes here.</p>
 
-	<form id="addTask">
-		<input type="text" id="newTask" />
+	<form id="addTask" method="get" action="backend.php">
+		<input name="newTask" type="text" id="newTask" size="40" />
 		<input type="submit" value="Add Task" />
 	</form>
 
@@ -40,3 +41,4 @@ include "backend.php";
 	</div>
 </body>
 </html>
+
