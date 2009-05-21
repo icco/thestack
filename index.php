@@ -19,30 +19,15 @@ include "markdown.php";
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<script type="text/javascript" src="mootools-core.js"></script>
 	<script type="text/javascript" src="mootools-more.js"></script>
-	<script type="text/javascript" src="stack.js"></script>
-	<link rel="stylesheet" href="stack.css" type="text/css" />
 <title>the Stack!</title>
 </head>
 <body>
 <div id="cont">
 	<h1>theStack!</h1>
-	<p>OMG. Content goes here.</p>
-
-	<form id="addTask" method="get" action="backend.php">
-		<input name="newTask" type="text" id="newTask" size="40" />
-		<input type="submit" value="Add Task" />
+	<form id="addItem" method="post" action="backend.php">
+		<textarea name="content">The Task Goes Here</textarea>
+		<input type="submit" value="Add to theStack" />
 	</form>
-
-	<div id="listArea">
-		<ol id="todo">
-		<?php
-		//print file_get_contents("ToDo.txt");
-		?>
-		</ol>
-	</div>
-
-	<div id="data"/>
-	</div>
 </body>
 </html>
 
