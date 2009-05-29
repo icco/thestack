@@ -19,6 +19,11 @@ public class Note
 
 	}
 
+	function update($text, $color, $x, $y)
+	{
+
+	}
+
 	/**
 	 * Sets the x position of the note.
 	 *
@@ -90,7 +95,5 @@ public class Note
 	{
 		return $this->color;
 	}
-
-
 }
 ?>
