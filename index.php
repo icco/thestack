@@ -10,7 +10,7 @@
  *
  */
 
-include "lib/includes.php";
+require "lib/includes.php";
 
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -24,7 +24,7 @@ include "lib/includes.php";
 <div id="cont">
 	<h1>theStack!</h1>
 	<form id="addItem" method="post" action="backend.php">
-		<textarea name="content">The Task Goes Here</textarea>
+		<textarea name="content" cols="80" rows="3">The Task Goes Here</textarea><br />
 		<input type="submit" value="Add to theStack" />
 	</form>
 </body>
