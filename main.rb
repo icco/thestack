@@ -2,8 +2,8 @@
 
 require 'rubygems'
 require 'sinatra'
-require 'less'
 require 'erubis'
+require 'less'
 
 configure :production do
    # Configure stuff here you'll want to
