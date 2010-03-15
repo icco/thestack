@@ -31,6 +31,14 @@
          <li>Title by user at time</li>
          <li>Title by user at time</li>
       </ul>
+
+      <div id="footer">
+         <p>
+         the Stack is by <a href="http://natwelch.com">Nat Welch</a>. You can
+         find <a href="http://github.com/icco/thestack">the source on
+         github</a>.
+         </p>
+      </div>
    </div>
 </body>
 </html>
