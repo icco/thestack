@@ -5,6 +5,11 @@ require 'sinatra'
 require 'erubis'
 require 'less'
 
+configure do
+   # Do always at launch
+   set :sessions, true
+end
+
 configure :production do
    # Configure stuff here you'll want to
    # only be run at Heroku at boot
