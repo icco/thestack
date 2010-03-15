@@ -1,12 +1,9 @@
-# You'll need to require these if you
-# want to develop while running with ruby.
-# The config/rackup.ru requires these as well
-# for it's own reasons.
-#
-# $ ruby main.rb
-#
+# An app for saving ideas. Uses Erubris and Less for theming.
+
 require 'rubygems'
 require 'sinatra'
+require 'less'
+require 'erubis'
 
 configure :production do
    # Configure stuff here you'll want to
@@ -18,9 +15,14 @@ end
 
 # Quick test
 get '/' do
-     "Congradulations!
-        You're running a Sinatra application on Heroku!"
+   erubis :index
 end
+
+get '/style.css' do
+   content_type 'text/css', :charset => 'utf-8'
+   less :style
+end
+
 
 # TODO: Delete...
 get '/env' do
