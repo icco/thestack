@@ -19,6 +19,10 @@ get '/' do
    erubis :index
 end
 
+post '/' do
+   erubis :view, :locals => {:hello => params['text']}
+end
+
 get '/style.css' do
    content_type 'text/css', :charset => 'utf-8'
    less :style

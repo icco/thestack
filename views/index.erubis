@@ -11,8 +11,8 @@
       </p>
 
       <h2>New thought</h2>
-      <form>
-         <textarea> Put thought here. (Formating is either Markup or plain text only.  </textarea>
+      <form method="post">
+         <textarea name="text">Put thought here. (Formatting is either Markup or plain text only.</textarea>
          <input type="submit" value="push" />
       </form>
       <div class="clearfix"></div>
