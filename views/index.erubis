@@ -1,10 +1,36 @@
 <html>
 <head>
-<title>This is a title</title>
+   <title>The Stack</title>
+   <link href="/style.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div id="cont">
-<p>YAY. You have templates yo!</p>
-</div>
+   <div id="cont">
+      <h1>the Stack</h1>
+      <p>
+         This is a site for uploading thoughts and such.
+      </p>
+
+      <h2>New thought</h2>
+      <form>
+         <textarea> Put thought here. (Formating is either Markup or plain text only.  </textarea>
+         <input type="submit" value="push" />
+      </form>
+      <div class="clearfix"></div>
+
+      <h2>Most recent thoughts</h2>
+      <ul>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+      </ul>
+   </div>
 </body>
 </html>

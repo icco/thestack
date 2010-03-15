@@ -2,10 +2,44 @@
  * Less based style sheet.
  */
 
+body {
+   color: #666;
+
+   h1 {
+      color: #111;
+   }
+
+   h2 {
+      color: #555;
+   }
+}
+
+/** 
+ * Fix float problem.
+ * http://www.positioniseverything.net/easyclearing.html 
+ */
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+ }
+
 #cont {
    width: 500px;
+   margin-left: auto;
+   margin-right: auto;
+   
+   textarea {
+      width: 500px;
+      height: 300px;
+   }
 
-   p {
-      color: #333;
+   input {
+      float: right;
+      width: 120px;
+      height: 50px;
+      margin: 10px;
    }
 }

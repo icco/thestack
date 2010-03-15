@@ -10,7 +10,6 @@ configure :production do
    # only be run at Heroku at boot
 end
 
-# Quick test
 get '/' do
    erubis :index
 end
@@ -20,6 +19,10 @@ get '/style.css' do
    less :style
 end
 
+# TODO: Turn this into a template?
+get '/about' do
+   "I'm running version " + Sinatra::VERSION
+end
 
 # TODO: Delete...
 get '/env' do
