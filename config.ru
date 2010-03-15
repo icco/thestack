@@ -1,6 +1,5 @@
-require 'main'
  
-## There is no need to set directories here anymore;
 ## Just run the application
-  
+require 'main'
 run Sinatra::Application
+
