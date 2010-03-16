@@ -9,13 +9,13 @@ require 'sequel'
 # Always run at launch
 configure do
    set :sessions, true
-   DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
-   DB.drop_table :posts
-   DB.create_table :posts do
-      primary_key :postid
-      Text :text
-      integer :date
-   end
+#   DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
+#   DB.drop_table :posts
+#   DB.create_table :posts do
+#      primary_key :postid
+#      Text :text
+#      integer :date
+#   end
 
 end
 
