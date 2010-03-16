@@ -4,10 +4,12 @@ require 'rubygems'
 require 'sinatra'
 require 'erubis'
 require 'less'
+require 'sequel'
 
 configure do
    # Do always at launch
    set :sessions, true
+   Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
 end
 
 configure :production do

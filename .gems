@@ -2,4 +2,5 @@ less
 erubis
 sinatra --version 1.0.b
 rdiscount
+sequel
 
