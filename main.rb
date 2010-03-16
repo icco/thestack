@@ -6,10 +6,16 @@ require 'erubis'
 require 'less'
 require 'sequel'
 
+# Always run at launch
 configure do
-   # Do always at launch
    set :sessions, true
-   Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
+   DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
+   DB.create_table :posts do
+      primary_key :postid
+      String :text
+      Int :date
+   end
+
 end
 
 configure :production do
