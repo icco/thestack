@@ -19,7 +19,6 @@ configure do
 
 end
 
-
 configure :production do
    # Configure stuff here you'll want to
    # only be run at Heroku at boot
@@ -30,10 +29,9 @@ get '/' do
 end
 
 post '/' do
-   DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
-   data = DB[:posts]
-   data.insert(:text => params['text'], :date => Time.now.to_i)
-   erubis :view, :locals => {:hello => params['text']}
+   d = Post.new params[:text]
+   d.save
+   erubis :view, :locals => {:post => d}
 end
 
 get '/style.css' do
@@ -49,5 +47,26 @@ end
 # TODO: Delete...
 get '/env' do
   ENV.inspect
+end
+
+class Post 
+   def initialize in_text
+      @text = in_text
+      @date = Time.now.to_i
+   end
+
+   def get_text 
+      return @text
+   end
+
+   def set_text in_text
+      @text = in_text
+   end
+
+   def save
+      db = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
+      data = db[:posts]
+      data.insert(:text => @text, :date => @date)
+   end
 end
 

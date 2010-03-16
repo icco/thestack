@@ -1,2 +1,41 @@
-<h1>View</h1>
-<%= hello %>
+<html>
+<head>
+   <title>The Stack</title>
+   <link href="/style.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+   <div id="cont">
+      <h1>the Stack</h1>
+      <p>
+         This is a site for uploading thoughts and such.
+      </p>
+
+      <h2>View</h2>
+      <%= post:text %>
+      <div class="clearfix"></div>
+
+      <h2>Most recent thoughts</h2>
+      <ul>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+         <li>Title by user at time</li>
+      </ul>
+
+      <div id="footer">
+         <p>
+         the Stack is by <a href="http://natwelch.com">Nat Welch</a>. You can
+         find <a href="http://github.com/icco/thestack">the source on
+         github</a>.
+         </p>
+      </div>
+   </div>
+</body>
+</html>
