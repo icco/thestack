@@ -17,8 +17,8 @@ task :build_db do
 		primary_key :postid
 		Text :text
 		String :title
-		FixNum :date
-		FixNum :userid
+		Integer :date
+		Integer :userid
 	end
 
 	puts "Database built."
