@@ -69,7 +69,8 @@ class Post
       data.insert(
          :text => @text,
          :date => @date,
-         :title => @title
+         :title => @title,
+         :userid => @userid
       )
    end
 
