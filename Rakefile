@@ -13,8 +13,7 @@ end
 
 task :build_db do
 	DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
-	DB.drop_table :posts
-	DB.create_table :posts do
+	DB.create_table! :posts do
 		primary_key :postid
 		Text :text
 		String :title
