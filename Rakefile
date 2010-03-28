@@ -21,6 +21,8 @@ task :build_db do
 		FixNum :date
 		FixNum :userid
 	end
+
+	puts "Database built."
 end
 
 desc "Deploy to Heroku."
