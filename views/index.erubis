@@ -12,24 +12,16 @@
 
       <h2>New thought</h2>
       <form method="post">
-         <textarea name="text">Put thought here. (Formatting is either Markup or plain text only.</textarea>
+         <textarea name="text">Put thought here. (Formatting is either Markup or plain text only.)</textarea>
          <input type="submit" value="push" />
       </form>
       <div class="clearfix"></div>
 
       <h2>Most recent thoughts</h2>
       <ul>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
+      <% for item in posts %>
+         <li><%= item %></li>
+      <% end %>
       </ul>
 
       <div id="footer">

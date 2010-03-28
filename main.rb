@@ -1,3 +1,4 @@
+#!/usr/bin/ruby1.8
 # An app for saving ideas. Uses Erubris and Less for theming.
 
 require 'rubygems'
@@ -9,14 +10,6 @@ require 'sequel'
 # Always run at launch
 configure do
    set :sessions, true
-#   DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
-#   DB.drop_table :posts
-#   DB.create_table :posts do
-#      primary_key :postid
-#      Text :text
-#      integer :date
-#   end
-
 end
 
 configure :production do
@@ -25,13 +18,17 @@ configure :production do
 end
 
 get '/' do
-   erubis :index
+   erubis :index, :locals => {:posts => Post.getPosts}
 end
 
 post '/' do
-   d = Post.new params[:text]
+   d = Post.new 
+   d.text = params[:text]
    d.save
-   erubis :view, :locals => {:post => d}
+   erubis :view, :locals => {
+      :post => d,
+      :posts => Post.getPosts
+   }
 end
 
 get '/style.css' do
@@ -49,24 +46,61 @@ get '/env' do
   ENV.inspect
 end
 
-class Post 
-   def initialize in_text
-      @text = in_text
-      @date = Time.now.to_i
-   end
+def getDB
+   Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
+end
 
-   def get_text 
-      return @text
-   end
+class Post
+   attr_accessor :text, :title, :date, :userid, :postid
 
-   def set_text in_text
-      @text = in_text
+   def initialize
+      @title = "fake title"
+      @userid = 1
+      @date = 0
+      @text = ""
+      @postid = -1
    end
 
    def save
-      db = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
+      @date = Time.now.to_i
+
+      db = getDB
       data = db[:posts]
-      data.insert(:text => @text, :date => @date)
+      data.insert(
+         :text => @text,
+         :date => @date,
+         :title => @title
+      )
+   end
+
+   def to_s
+      inspect
+   end
+
+   def inspect
+      {"postid" => @postid,
+         "text" => @text,
+         "title" => @title,
+         "date" => @date,
+         "userid" => @userid,
+      }.inspect
+   end
+
+   def Post.getPosts
+      list = getDB[:posts].order(:date.desc).limit(10)
+      posts = []
+      for row in list
+         p = Post.new
+         p.date = row[:date]
+         p.title = row[:title]
+         p.postid = row[:postid]
+         p.text = row[:text]
+         p.userid = row[:userid]
+
+         posts.push(p)
+      end
+
+      return posts
    end
 end
 

@@ -16,17 +16,7 @@
 
       <h2>Most recent thoughts</h2>
       <ul>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
-         <li>Title by user at time</li>
+         <li><%= post:title %> by <%= post:userid %> at <%= post:date %></li>
       </ul>
 
       <div id="footer">
