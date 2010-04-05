@@ -25,8 +25,14 @@ post '/' do
    d = Post.new 
    d.text = params[:text]
    d.save
+
+   redirect "/view/#{d.postid}";
+end
+
+get '/view/:id' do
+   p = Post.build params[:id]
    erubis :view, :locals => {
-      :post => d,
+      :post => p,
       :posts => Post.getPosts
    }
 end
@@ -85,6 +91,20 @@ class Post
          "date" => @date,
          "userid" => @userid,
       }.inspect
+   end
+
+   def Post.build id
+      row = getDB[:posts][:postid => id]
+      p row.inspect
+
+      p = Post.new
+      p.date = row[:date]
+      p.title = row[:title]
+      p.postid = row[:postid]
+      p.text = row[:text]
+      p.userid = row[:userid]
+
+      return p
    end
 
    def Post.getPosts

@@ -10,13 +10,19 @@
          This is a site for uploading thoughts and such.
       </p>
 
+      <p>
+         <a href="/">Go Home ...</a>
+      </p>
+
       <h2>View</h2>
-      <%= post:text %>
+      <%= post %>
       <div class="clearfix"></div>
 
       <h2>Most recent thoughts</h2>
       <ul>
-         <li><%= post:title %> by <%= post:userid %> at <%= post:date %></li>
+      <% for item in posts %>
+         <li><%= item %></li>
+      <% end %>
       </ul>
 
       <div id="footer">
