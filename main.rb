@@ -32,10 +32,20 @@ end
 
 get '/view/:id' do
    p = Post.build params[:id]
-   erubis :view, :locals => {
-      :post => p,
-      :posts => Post.getPosts
-   }
+   if p
+      erubis :view, :locals => {
+         :post => p,
+         :posts => Post.getPosts
+      }
+   else 
+      status 404
+      "Not found"
+   end
+end
+
+get '/error' do
+   status 404
+   puts "WE'VE HAD AN ERROR CAPTAIN!\n"
 end
 
 get '/style.css' do
@@ -63,18 +73,25 @@ class Post < Sequel::Model(:posts)
 
    end
 
+   def to_s
+      inspect
+   end
+
    def Post.build id
       row = DB[:posts][:postid => id]
-      p row.inspect
 
-      p = Post.new
-      p.date = row[:date]
-      p.title = row[:title]
-      p.postid = row[:postid]
-      p.text = row[:text]
-      p.userid = row[:userid]
+      if !row
+         return nil
+      else
+         p = Post.new
+         p.date = row[:date]
+         p.title = row[:title]
+         p.postid = row[:postid]
+         p.text = row[:text]
+         p.userid = row[:userid]
 
-      return p
+         return p
+      end
    end
 
    def Post.getPosts

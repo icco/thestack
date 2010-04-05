@@ -16,9 +16,10 @@ task :build_db do
 	DB.create_table! :posts do
 		primary_key :postid
 		Text :text
-		String :title
-		Integer :date
-		Integer :userid
+		String :title,:default => "Fake Title"
+		Integer :date,:default => 0
+		Integer :userid,:default => 0
+
 	end
 
 	puts "Database built."
