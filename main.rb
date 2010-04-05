@@ -10,6 +10,7 @@ require 'sequel'
 # Always run at launch
 configure do
    set :sessions, true
+   DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
 end
 
 configure :production do
@@ -52,49 +53,18 @@ get '/env' do
   ENV.inspect
 end
 
-def getDB
-   Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
-end
 
-class Post
-   attr_accessor :text, :title, :date, :userid, :postid
-
-   def initialize
-      @title = "fake title"
-      @userid = 1
-      @date = 0
-      @text = ""
-      @postid = -1
-   end
-
-   def save
+class Post < Sequel::Model(:posts)
+   def before_create 
+      super
       @date = Time.now.to_i
+      @userid = 1
+      @title = "fake title"
 
-      db = getDB
-      data = db[:posts]
-      data.insert(
-         :text => @text,
-         :date => @date,
-         :title => @title,
-         :userid => @userid
-      )
-   end
-
-   def to_s
-      inspect
-   end
-
-   def inspect
-      {"postid" => @postid,
-         "text" => @text,
-         "title" => @title,
-         "date" => @date,
-         "userid" => @userid,
-      }.inspect
    end
 
    def Post.build id
-      row = getDB[:posts][:postid => id]
+      row = DB[:posts][:postid => id]
       p row.inspect
 
       p = Post.new
@@ -108,7 +78,7 @@ class Post
    end
 
    def Post.getPosts
-      list = getDB[:posts].order(:date.desc).limit(10)
+      list = DB[:posts].order(:date.desc).limit(10)
       posts = []
       for row in list
          p = Post.new
