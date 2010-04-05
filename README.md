@@ -10,6 +10,13 @@ Code started from the [example heroku sintra app][4].
 
 The general idea is a pile of notes and ideas that are searchable.
 
+## Installation 
+
+ * if you are on Debian, make sure you install `libsqlite3-dev`
+ * You need to install all of the gems listed in .gems
+ * This works better on ruby 1.8, but should work in 1.9 as well
+ * to launch local development server `rake build_db` then `./main.rb`
+
 ## TODO
 
  * Store text, date, user
