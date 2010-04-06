@@ -20,7 +20,13 @@
       <h2>Most recent thoughts</h2>
       <ul>
       <% for item in posts %>
-         <li><%= item %></li>
+         <li>
+            <a href="/view/<%= item.postid %>">
+               <%= item.title %>
+            </a> 
+            by <%= item.userid %>
+            on <%= item.nice_date %>
+         </li>
       <% end %>
       </ul>
 

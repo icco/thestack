@@ -3,7 +3,6 @@
 
 require 'rubygems'
 require 'sinatra'
-require 'erubis'
 require 'less'
 require 'sequel'
 
@@ -19,12 +18,14 @@ configure :production do
 end
 
 get '/' do
-   erubis :index, :locals => {:posts => Post.getPosts}
+   erb :index, :locals => {:posts => Post.all}
 end
 
 post '/' do
    d = Post.new 
    d.text = params[:text]
+   d.date = Time.now.to_i
+   d.userid = 1
    d.save
 
    redirect "/view/#{d.postid}";
@@ -33,9 +34,9 @@ end
 get '/view/:id' do
    p = Post.build params[:id]
    if p
-      erubis :view, :locals => {
+      erb :view, :locals => {
          :post => p,
-         :posts => Post.getPosts
+         :posts => Post.all
       }
    else 
       status 404
@@ -65,16 +66,12 @@ end
 
 
 class Post < Sequel::Model(:posts)
-   def before_create 
-      super
-      @date = Time.now.to_i
-      @userid = 1
-      @title = "fake title"
-
-   end
-
    def to_s
       inspect
+   end
+
+   def nice_date
+      "date here..."
    end
 
    def Post.build id
