@@ -70,8 +70,10 @@ class Post < Sequel::Model(:posts)
       inspect
    end
 
+   # Ya, this doesn't work...
    def nice_date
-      "date here..."
+      distance = self.date ? Time.now.to_i - self.date : 0
+      "#{distance} minutes ago"
    end
 
    def Post.build id
