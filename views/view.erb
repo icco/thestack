@@ -15,31 +15,25 @@
       </p>
 
       <h2>View</h2>
-      <h3><%= post[:title] %></h3>
-      <p>
-         <%= post[:text] %>
-      </p>
+      <h3><%= post.title %></h3>
+      <div class="markdown">
+         <%= post.nice_text %>
+      </div>
       <div class="clearfix"></div>
 
       <h2>Most recent thoughts</h2>
       <ul>
       <% for item in posts %>
          <li>
-            <a href="/view/<%= item[:postid] %>">
-               <%= item[:title] %>
-            </a> 
-            by <%= item[:userid] %>
-            on <%= item[:date] %>
+            <a href="/view/<%= item[:postid] %>"><%= item[:title] %></a>  
+             by <%= item.userid %>
+             on <%= item.nice_date %>
          </li>
       <% end %>
       </ul>
 
       <div id="footer">
-         <p>
-         the Stack is by <a href="http://natwelch.com">Nat Welch</a>. You can
-         find <a href="http://github.com/icco/thestack">the source on
-         github</a>.
-         </p>
+         <p>the Stack is by <a href="http://natwelch.com">Nat Welch</a>. You can find <a href="http://github.com/icco/thestack">the source on github</a>.</p>
       </div>
    </div>
 </body>

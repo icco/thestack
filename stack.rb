@@ -5,6 +5,7 @@ require 'rubygems'
 require 'sinatra'
 require 'less'
 require 'sequel'
+require 'rdiscount'
 
 # Always run at launch
 configure do
@@ -18,7 +19,7 @@ configure :production do
 end
 
 get '/' do
-   erb :index, :locals => {:posts => Post.all}
+   erb :index, :locals => {:posts => Post.getPosts}
 end
 
 post '/' do
@@ -36,7 +37,7 @@ get '/view/:id' do
    if p
       erb :view, :locals => {
          :post => p,
-         :posts => Post.all
+         :posts => Post.getPosts
       }
    else 
       status 404
@@ -70,10 +71,21 @@ class Post < Sequel::Model(:posts)
       inspect
    end
 
-   # Ya, this doesn't work...
    def nice_date
       distance = self.date ? Time.now.to_i - self.date : 0
-      "#{distance} minutes ago"
+
+     case distance
+       when 0 .. 59 then "#{distance} seconds ago"
+       when 60 .. (3600-1) then  "#{distance/60} minutes ago"
+       when 3600 .. (3600*24-1) then  "#{distance/360} hours ago"
+       when (3600*24) .. (3600*24*30) then  "#{distance/(3600*24)} days ago"
+       else Time.at(self.date).strftime("%m/%d/%Y")
+     end
+   end
+
+   def nice_text
+      md = RDiscount.new(self.text, :smart)
+      return md.to_html
    end
 
    def Post.build id
@@ -94,20 +106,7 @@ class Post < Sequel::Model(:posts)
    end
 
    def Post.getPosts
-      list = DB[:posts].order(:date.desc).limit(10)
-      posts = []
-      for row in list
-         p = Post.new
-         p.date = row[:date]
-         p.title = row[:title]
-         p.postid = row[:postid]
-         p.text = row[:text]
-         p.userid = row[:userid]
-
-         posts.push(p)
-      end
-
-      return posts
+      Post.order(:date.desc).limit(10)
    end
 end
 
