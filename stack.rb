@@ -83,6 +83,10 @@ class Post < Sequel::Model(:posts)
      end
    end
 
+   def title
+      if super.empty? then "Post ##{self.postid}" else super end
+   end
+
    def nice_text
       md = RDiscount.new(self.text, :smart)
       return md.to_html

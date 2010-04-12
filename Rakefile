@@ -16,7 +16,7 @@ task :build_db do
 	DB.create_table! :posts do
 		primary_key :postid
 		Text :text
-		String :title,:default => "Fake Title"
+		String :title,:default => ""
 		Integer :date,:default => 0
 		Integer :userid,:default => 0
 
