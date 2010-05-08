@@ -1,4 +1,4 @@
-#!/usr/bin/ruby1.8
+#!/usr/bin/ruby
 # An app for saving ideas. Uses Erubris and Less for theming.
 
 require 'rubygems'
