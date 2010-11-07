@@ -65,7 +65,6 @@ get '/env' do
   ENV.inspect
 end
 
-
 class Post < Sequel::Model(:posts)
    def to_s
       inspect
@@ -74,13 +73,13 @@ class Post < Sequel::Model(:posts)
    def nice_date
       distance = self.date ? Time.now.to_i - self.date : 0
 
-     case distance
-       when 0 .. 59 then "#{distance} seconds ago"
-       when 60 .. (3600-1) then  "#{distance/60} minutes ago"
-       when 3600 .. (3600*24-1) then  "#{distance/360} hours ago"
-       when (3600*24) .. (3600*24*30) then  "#{distance/(3600*24)} days ago"
-       else Time.at(self.date).strftime("%m/%d/%Y")
-     end
+      case distance
+         when 0 .. 59 then "#{distance} seconds ago"
+         when 60 .. (3600-1) then  "#{distance/60} minutes ago"
+         when 3600 .. (3600*24-1) then  "#{distance/360} hours ago"
+         when (3600*24) .. (3600*24*30) then  "#{distance/(3600*24)} days ago"
+         else Time.at(self.date).strftime("%m/%d/%Y")
+      end
    end
 
    def title
