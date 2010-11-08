@@ -1,5 +1,4 @@
- 
-## Just run the application
-require 'main'
-run Sinatra::Application
 
+## Just run the application
+require 'stack'
+run Sinatra::Application
