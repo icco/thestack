@@ -1,19 +1,32 @@
 require "rubygems"
 
+# Define the Database.
+DB_CONST = "theStack.db"
+
 task :default => [:run]
 
 desc "Launch the app."
 task :run do
-   Rake::Task[:db].invoke if !File.exists? "thestack.db"
+   Rake::Task[:db].invoke if !File.exists? DB_CONST
 
-   exec './stack.rb'
+   system './stack.rb'
+end
+
+desc "Launch the app with shotgun."
+task :shotgun do
+   # We do this to make sure you have shotgun
+   require "shotgun"
+
+   Rake::Task[:db].invoke if !File.exists? DB_CONST
+
+   system 'shotgun config.ru'
 end
 
 desc "Create local db."
 task :db do
    require "sequel"
 
-	DB = Sequel.connect('sqlite://thestack.db')
+	DB = Sequel.connect("sqlite://#{DB_CONST}")
 	DB.create_table! :posts do
 		primary_key :postid
 		Text :text

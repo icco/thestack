@@ -10,7 +10,7 @@ require 'rdiscount'
 # Always run at launch
 configure do
    set :sessions, true
-   DB = Sequel.connect('sqlite://thestack.db')
+   DB = Sequel.connect('sqlite://theStack.db')
 end
 
 get '/' do
