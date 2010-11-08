@@ -101,6 +101,10 @@ class Post < Sequel::Model(:posts)
       return md.to_html
    end
 
+   def blurb
+      return self.text.slice(0..100)
+   end
+
    def children
       return @children
    end
