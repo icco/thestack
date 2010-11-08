@@ -1,33 +1,39 @@
 <html>
-<head>
-   <title>theStack!</title>
-   <link href="/style.css" media="screen" rel="stylesheet" type="text/css" />
-</head>
-<body>
-   <div id="cont">
-      <h1>theStack!</h1>
-      <p>
-         This is a site for uploading thoughts and such.
-      </p>
+   <head>
+      <title>theStack!</title>
+      <link href="/style.css" media="screen" rel="stylesheet" type="text/css" />
+   </head>
+   <body>
+      <div id="cont">
+         <div id="header">
+            <h1>theStack!</h1>
+            <p>
+            a locally hosted site for uploading thoughts and such.
+            </p>
+         </div>
 
-      <h2>New thought</h2>
-      <form method="post">
-         <textarea name="text">Put thought here. (Formatting is either Markup or plain text only.)</textarea>
-         <input type="submit" value="push" />
-      </form>
-      <div class="clearfix"></div>
+         <div id="main">
+            <form method="post">
+               <input type="text" name="title" value="New thought..." id="title-input" />
+               <textarea name="text" id="text-input">Put thought here. (Formatting is either Markup or plain text only.)</textarea>
+               <input id="submit" type="submit" value="push" />
+            </form>
+            <div class="clearfix"></div>
+         </div>
 
-      <h2>Most recent thoughts</h2>
-      <ul>
-      <% for item in posts %>
-         <li>
-            <a href="/view/<%= item[:postid] %>"><%= item.title %></a>  
-             on <%= item.nice_date %>
-         </li>
-      <% end %>
-      </ul>
+         <!--
+         <h2>Most recent thoughts</h2>
+         <ul>
+            <% for item in posts %>
+               <li>
+               <a href="/view/<%= item[:postid] %>"><%= item.title %></a>  
+               on <%= item.nice_date %>
+               </li>
+            <% end %>
+         </ul>
+         -->
 
-      <%= erb :footer %> 
-   </div>
-</body>
+         <%= erb :footer %> 
+      </div>
+   </body>
 </html>
