@@ -17,10 +17,9 @@ task :db do
 	DB.create_table! :posts do
 		primary_key :postid
 		Text :text
-		String :title,:default => ""
-		Integer :date,:default => 0
-		Integer :userid,:default => 0
-
+		String :title, :default => ""
+		Integer :date, :default => 0
+		Integer :parent, :default => 0
 	end
 
 	puts "Database built."
@@ -28,5 +27,10 @@ end
 
 desc "Run test suite."
 task :test do
-	puts "Whoa there, cowboy. Let's not get hasty.\n I mean, who seriously writes tests these days?"
+	puts <<-WHOA
+
+      Whoa there, cowboy. Let's not get hasty.
+      I mean, who seriously writes tests these days?
+
+   WHOA
 end
