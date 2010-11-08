@@ -1,5 +1,5 @@
-#!/usr/bin/ruby
-# An app for saving ideas. Uses Erubris and Less for theming.
+#!/usr/bin/env ruby
+# An app for saving ideas. Uses Erb and Less for theming.
 
 require 'rubygems'
 require 'sinatra'
