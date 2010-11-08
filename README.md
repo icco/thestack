@@ -21,6 +21,12 @@ The general idea is a pile of notes and ideas that are searchable.
  [3]: http://www.sinatrarb.com/
  [4]: http://github.com/sinatra/heroku-sinatra-app
 
+## Developer Notes
+
+I am incredibly forgetful. So here is a list of references for when I'm trying to do productive stuff.
+
+ * [Sequel Cheat Sheet](http://sequel.rubyforge.org/rdoc/files/doc/cheat_sheet_rdoc.html)
+
 ## TODO
 
 This list doesn't have any real order to it, just stuff I want to get done at some point. 
