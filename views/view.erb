@@ -1,37 +1,35 @@
 <html>
-<head>
-   <title>The Stack</title>
-   <link href="/style.css" media="screen" rel="stylesheet" type="text/css" />
-</head>
-<body>
-   <div id="cont">
-      <h1>the Stack</h1>
-      <p>
-         This is a site for uploading thoughts and such.
-      </p>
+   <head>
+      <title><%= post.title %> > theStack!</title>
+      <link href="/style.css" media="screen" rel="stylesheet" type="text/css" />
+      <script type="text/javascript" src="/stack.js"></script>
+   </head>
+   <body>
+      <div id="cont">
+         <%= erb :header %> 
 
-      <p>
-         <a href="/">Go Home ...</a>
-      </p>
+         <div id="homeLink">
+            <a href="/">Go Home ...</a>
+         </div>
 
-      <h2>View</h2>
-      <h3><%= post.title %></h3>
-      <div class="markdown">
-         <%= post.nice_text %>
+         <h2>View</h2>
+         <h3><%= post.title %></h3>
+         <div class="markdown">
+            <%= post.nice_text %>
+         </div>
+         <div class="clearfix"></div>
+
+         <h2>Most recent thoughts</h2>
+         <ul>
+            <% for item in posts %>
+               <li>
+               <a href="/view/<%= item[:postid] %>"><%= item.title %></a>  
+               on <%= item.nice_date %>
+               </li>
+            <% end %>
+         </ul>
+
+         <%= erb :footer %> 
       </div>
-      <div class="clearfix"></div>
-
-      <h2>Most recent thoughts</h2>
-      <ul>
-      <% for item in posts %>
-         <li>
-            <a href="/view/<%= item[:postid] %>"><%= item.title %></a>  
-             on <%= item.nice_date %>
-         </li>
-      <% end %>
-      </ul>
-
-      <%= erb :footer %> 
-   </div>
-</body>
+   </body>
 </html>

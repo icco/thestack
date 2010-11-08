@@ -18,14 +18,17 @@ get '/' do
 end
 
 post '/' do
+   p params.inspect
 
    # I really need to validate this...
    text = params[:text]
+   title = params[:title]
    parent = params[:parent].nil? ? 0 : params[:parent].to_i
 
    # Build and save the object
    d = Post.new 
    d.text = text
+   d.title = title
    d.date = Time.now.to_i
    d.parent = parent
    d.save

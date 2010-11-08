@@ -2,16 +2,11 @@
    <head>
       <title>theStack!</title>
       <link href="/style.css" media="screen" rel="stylesheet" type="text/css" />
+      <script type="text/javascript" src="/stack.js"></script>
    </head>
    <body>
       <div id="cont">
-         <div id="header">
-            <h1>theStack!</h1>
-            <p>
-            a locally hosted site for uploading thoughts and such.
-            </p>
-         </div>
-
+         <%= erb :header %> 
          <div id="main">
             <form method="post">
                <input type="text" name="title" value="New thought..." id="title-input" />
