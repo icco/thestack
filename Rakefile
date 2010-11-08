@@ -34,3 +34,8 @@ task :test do
 
    WHOA
 end
+
+desc "Gets us back to a fresh install."
+task :clean do
+   FileUtils.rm Dir.glob('*.db')
+end
