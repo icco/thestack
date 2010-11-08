@@ -1,6 +1,5 @@
 less
-sinatra --version 1.0
+sinatra
 rdiscount
 sequel
 sqlite3-ruby
-

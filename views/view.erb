@@ -25,8 +25,7 @@
       <ul>
       <% for item in posts %>
          <li>
-            <a href="/view/<%= item[:postid] %>"><%= item[:title] %></a>  
-             by <%= item.userid %>
+            <a href="/view/<%= item[:postid] %>"><%= item.title %></a>  
              on <%= item.nice_date %>
          </li>
       <% end %>

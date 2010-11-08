@@ -1,11 +1,11 @@
 <html>
 <head>
-   <title>The Stack</title>
+   <title>theStack!</title>
    <link href="/style.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
    <div id="cont">
-      <h1>the Stack</h1>
+      <h1>theStack!</h1>
       <p>
          This is a site for uploading thoughts and such.
       </p>
@@ -22,7 +22,6 @@
       <% for item in posts %>
          <li>
             <a href="/view/<%= item[:postid] %>"><%= item.title %></a>  
-             by <%= item.userid %>
              on <%= item.nice_date %>
          </li>
       <% end %>

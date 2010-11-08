@@ -10,12 +10,7 @@ require 'rdiscount'
 # Always run at launch
 configure do
    set :sessions, true
-   DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
-end
-
-configure :production do
-   # Configure stuff here you'll want to
-   # only be run at Heroku at boot
+   DB = Sequel.connect('sqlite://thestack.db')
 end
 
 get '/' do
@@ -23,10 +18,16 @@ get '/' do
 end
 
 post '/' do
+
+   # I really need to validate this...
+   text = params[:text]
+   parent = params[:parent].nil? ? 0 : params[:parent].to_i
+
+   # Build and save the object
    d = Post.new 
-   d.text = params[:text]
+   d.text = text
    d.date = Time.now.to_i
-   d.userid = 1
+   d.parent = parent
    d.save
 
    redirect "/view/#{d.postid}";
@@ -62,10 +63,18 @@ end
 
 # TODO: Delete...
 get '/env' do
-  ENV.inspect
+   out = "<pre>\n"
+   ENV.to_hash.each_pair {|a, b| out += "#{a}: #{b}\n" }
+   out += "</pre>\n"
+
+   out
 end
 
-
+# So normall we would put this in a serperate file. But we are trying to keep
+# this all compact and what not.
+#
+# Anyway, this deals with the posts. It's definition is built off of what is in
+# the DB.
 class Post < Sequel::Model(:posts)
    def to_s
       inspect
@@ -74,13 +83,13 @@ class Post < Sequel::Model(:posts)
    def nice_date
       distance = self.date ? Time.now.to_i - self.date : 0
 
-     case distance
-       when 0 .. 59 then "#{distance} seconds ago"
-       when 60 .. (3600-1) then  "#{distance/60} minutes ago"
-       when 3600 .. (3600*24-1) then  "#{distance/360} hours ago"
-       when (3600*24) .. (3600*24*30) then  "#{distance/(3600*24)} days ago"
-       else Time.at(self.date).strftime("%m/%d/%Y")
-     end
+      case distance
+         when 0 .. 59 then "#{distance} seconds ago"
+         when 60 .. (3600-1) then  "#{distance/60} minutes ago"
+         when 3600 .. (3600*24-1) then  "#{distance/360} hours ago"
+         when (3600*24) .. (3600*24*30) then  "#{distance/(3600*24)} days ago"
+         else Time.at(self.date).strftime("%m/%d/%Y")
+      end
    end
 
    def title
@@ -90,6 +99,14 @@ class Post < Sequel::Model(:posts)
    def nice_text
       md = RDiscount.new(self.text, :smart)
       return md.to_html
+   end
+
+   def children
+      return @children
+   end
+
+   def children= x
+      @children = x
    end
 
    def Post.build id
@@ -103,7 +120,8 @@ class Post < Sequel::Model(:posts)
          p.title = row[:title]
          p.postid = row[:postid]
          p.text = row[:text]
-         p.userid = row[:userid]
+         p.parent = row[:parent]
+         p.children = DB[:posts][:parent => id]
 
          return p
       end
