@@ -84,9 +84,13 @@ post '/search' do
 end
 
 get '/search/:string' do
-   query = params[:string]
+   query = CGI::unescape params[:string]
    posts = Post::search(query)
-   erb :search, :locals => { :posts => posts }
+   p query
+   erb :search, :locals => { 
+      :posts => posts, 
+      :search => query 
+   }
 end
 
 get '/style.css' do
@@ -183,7 +187,8 @@ class Post < Sequel::Model(:posts)
       Post.order(:date.desc).limit(10)
    end
 
+   # a simple search
    def Post.search string
-      Post.order(:date.desc).limit(10)
+      Post.filter(:title.like("%#{string}%") | :text.like("%#{string}%"))
    end
 end

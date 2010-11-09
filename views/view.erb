@@ -6,7 +6,7 @@
    </head>
    <body>
       <div id="cont">
-         <%= erb :header %> 
+         <%= erb(:header, :locals => {:search => "" }) %> 
 
          <div id="main" class="clearfix">
             <h2><%= post.title %></h2>

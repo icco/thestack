@@ -6,12 +6,13 @@
    </head>
    <body>
       <div id="cont">
-         <%= erb :header %> 
+         <%= erb(:header, :locals => {:search => search }) %> 
 
          <div id="main">
-         </div>
+            <h2>Here are your search results.</h2>
 
-         <%= erb(:thoughts, :locals => {:posts => posts}) %> 
+            <%= erb(:thoughts, :locals => {:posts => posts}) %> 
+         </div>
 
          <%= erb :footer %> 
       </div>
