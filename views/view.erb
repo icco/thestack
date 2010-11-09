@@ -12,22 +12,14 @@
             <a href="/">Go Home ...</a>
          </div>
 
-         <h2>View</h2>
-         <h3><%= post.title %></h3>
-         <div class="markdown">
-            <%= post.nice_text %>
+         <div id="main" class="clearfix">
+            <h3><%= post.title %></h3>
+            <div class="markdown">
+               <%= post.nice_text %>
+            </div>
          </div>
-         <div class="clearfix"></div>
 
-         <h2>Most recent thoughts</h2>
-         <ul>
-            <% for item in posts %>
-               <li>
-               <a href="/view/<%= item[:postid] %>"><%= item.title %></a>  
-               on <%= item.nice_date %>
-               </li>
-            <% end %>
-         </ul>
+         <%= erb(:thoughts, :locals => {:posts => posts}) %> 
 
          <%= erb :footer %> 
       </div>
