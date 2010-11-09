@@ -143,7 +143,7 @@ class Post < Sequel::Model(:posts)
    end
 
    def nice_text
-      md = RDiscount.new(CGI::unescapeHTML(self.text), :smart)
+      md = RDiscount.new(self.text, :smart)
       return md.to_html
    end
 
