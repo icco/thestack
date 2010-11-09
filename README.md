@@ -40,3 +40,4 @@ This list doesn't have any real order to it, just stuff I want to get done at so
  * upload image to third party image host
  * related
    * LSI, like Jekyll...?
+ * Add support for adding children
