@@ -44,7 +44,7 @@ post '/' do
    redirect "/view/#{d.postid}";
 end
 
-get '/view' do
+get '/view/?' do
    redirect '/'
 end
 
@@ -72,6 +72,15 @@ get '/view/:id/raw' do
       status 404
       "Not found"
    end
+end
+
+get '/search/?' do
+   redirect '/'
+end
+
+post '/search' do
+   cleaned = CGI::escape params[:string].strip
+   redirect "/search/#{cleaned}"
 end
 
 get '/search/:string' do
