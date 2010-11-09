@@ -49,11 +49,6 @@ get '/view/:id' do
    end
 end
 
-get '/error' do
-   status 404
-   puts "WE'VE HAD AN ERROR CAPTAIN!\n"
-end
-
 get '/style.css' do
    content_type 'text/css', :charset => 'utf-8'
    less :style
