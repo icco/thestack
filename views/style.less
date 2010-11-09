@@ -12,6 +12,101 @@ body {
    h2 {
       color: #555;
    }
+
+   h1, h2, h3, h4, h5, h6 {
+      margin-top: 0;
+   }
+}
+
+* {
+   margin: 0;
+   padding: 0;
+}
+
+.markdown {
+   font: 13.34px helvetica, arial, freesans, clean, sans-serif;
+   padding: 0.7em;
+   border: 1px solid #E9E9E9;
+   background: #F8F8F8;
+
+   ul li, ol li {
+    margin-bottom: 0.5em;
+        margin-top: 0.5em;
+   }
+
+   p {
+      line-height: 1.5em !important;
+      margin: 1em 0 !important;
+   }
+
+   pre {
+      background-color: #F8F8FF !important;
+      border: 1px solid #DEDEDE !important;
+      color: #444444 !important;
+      font-size: 12px !important;
+      line-height: 1.5em !important;
+      margin: 1em 0 !important;
+      overflow: auto !important;
+      padding: 0.5em !important;
+   }
+
+   code {
+      background-color: #F8F8FF !important;
+      border: 1px solid #DEDEDE !important;
+      color: #444444 !important;
+      font-size: 12px !important;
+      padding: 0 0.2em !important;
+   }
+
+   pre code {
+      background-color: #F8F8FF !important;
+      border: medium none !important;
+      font-size: 12px !important;
+      padding: 0 !important;
+   }
+
+   ul {
+      margin: 1em 0 1em 2em !important;
+   }
+
+   ol {
+      margin: 1em 0 1em 2em !important;
+   }
+
+   h1:first-child, h2:first-child {
+      border-top: medium none !important;
+      margin-top: 0 !important;
+      padding-top: 0.25em !important;
+   }
+
+   h1 {
+      border-top: 4px solid #AAAAAA !important;
+      font-size: 170% !important;
+      margin-top: 1.5em !important;
+      padding-top: 0.5em !important;
+   }
+
+   h1, h2, h3, h4, h5, h6 {
+      border: 0 none !important;
+   }
+
+   h2 {
+      font-size: 150% !important;
+      padding-top: 0.5em !important;
+   }
+
+   h3 {
+      margin-top: 1em !important;
+   }
+
+   a {
+      color: #4183C4;
+      text-decoration: none;
+   }
+
+   a:hover {
+      text-decoration: hover;
+   }
 }
 
 /** 
@@ -45,6 +140,11 @@ body {
          margin: 0;
          padding: 0;
       }
+
+      h1 a {
+         color: #111;
+         text-decoration: none;
+      }
    }
 
    #title-input, #text-input {
@@ -56,6 +156,10 @@ body {
 
    textarea {
       height: 300px;
+   }
+
+   a:hover {
+      color: silver !important;
    }
 
    #submit {
@@ -82,16 +186,36 @@ body {
    #submit:hover {
       background-color: #444;
    }
+
+   #recent {
+      margin-top: 2em;
+   }
+
+   .meta {
+      margin-right: 25px;
+      margin-top: 10px;
+      text-align: right;
+   }
 }
 
 #thoughts {
    .thought {
       width: 300px;
-      height: 120px;
+      height: 150px;
       border: 1px solid silver;
-      padding: 5px;
-      margin: 3px;
+      padding: 10px;
+      margin: 2px;
       float: left;
+      position: relative;
+      
+      .meta {
+         text-align: right;
+         font-size: 0.7em;
+         position: absolute;
+         bottom: 0;
+         width: 91%;
+         margin: 4px;
+      }
    }
 }
 

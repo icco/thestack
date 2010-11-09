@@ -15,10 +15,10 @@
                <input id="submit" type="submit" value="push" />
             </form>
             <div class="clearfix"></div>
-         </div>
 
-         <h2>Most recent thoughts</h2>
-         <%= erb(:thoughts, :locals => {:posts => posts}) %> 
+            <h2 id="recent">Most recent thoughts</h2>
+            <%= erb(:thoughts, :locals => {:posts => posts}) %> 
+         </div>
 
          <%= erb :footer %> 
       </div>

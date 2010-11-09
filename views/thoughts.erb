@@ -1,9 +1,9 @@
-
 <div id="thoughts" class="clearfix">
    <% for item in posts %>
       <div class="thought">
-         <a href="/view/<%= item[:postid] %>"><%= item.title %></a> on <%= item.nice_date %>.
+         <a href="/view/<%= item[:postid] %>"><%= item.title %></a>.
          <p><%= item.blurb %></p>
+         <div class="meta"><%= item.nice_date %></div>
       </div>
    <% end %>
 </div>

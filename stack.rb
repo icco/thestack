@@ -62,6 +62,18 @@ get '/view/:id' do
    end
 end
 
+get '/view/:id/raw' do
+   p = Post.build params[:id]
+
+   if p
+      content_type 'text/plain', :charset => 'utf-8'
+      p.text
+   else 
+      status 404
+      "Not found"
+   end
+end
+
 get '/search/:string' do
    query = params[:string]
    posts = Post::search(query)
@@ -97,14 +109,18 @@ class Post < Sequel::Model(:posts)
       inspect
    end
 
+   # Makes the classic "x thing ago"
+   #
+   # TODO: deal with 1 second, 1 minute, etc
+   # TODO: deal with yesterday, words for values less than ten
    def nice_date
       distance = self.date ? Time.now.to_i - self.date : 0
 
       case distance
          when 0 .. 59 then "#{distance} seconds ago"
-         when 60 .. (3599) then  "#{distance/60} minutes ago"
-         when 3600 .. ((3600*24)-1) then  "#{distance/360} hours ago"
-         when (3600*24) .. (3600*24*30) then  "#{distance/(3600*24)} days ago"
+         when 60 .. (60*60) then "#{distance/60} minutes ago"
+         when (60*60) .. (60*60*24) then "#{distance/(60*60)} hours ago"
+         when (60*60*24) .. (60*60*24*30) then "#{distance/((60*60)*24)} days ago"
          else Time.at(self.date).strftime("%m/%d/%Y")
       end
    end
