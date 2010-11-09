@@ -42,5 +42,4 @@ This list doesn't have any real order to it, just stuff I want to get done at so
  * search
  * related
    * LSI, like Jekyll...?
-   * heroku task... (dJ)
 
