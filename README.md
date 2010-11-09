@@ -26,6 +26,7 @@ The general idea is a pile of notes and ideas that are searchable.
 I am incredibly forgetful. So here is a list of references for when I'm trying to do productive stuff.
 
  * [Sequel Cheat Sheet](http://sequel.rubyforge.org/rdoc/files/doc/cheat_sheet_rdoc.html)
+ * [SQLite](http://www.sqlite.org/sqlite.html)
 
 ## TODO
 

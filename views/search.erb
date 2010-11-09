@@ -9,15 +9,8 @@
          <%= erb :header %> 
 
          <div id="main">
-            <form method="post">
-               <input type="text" name="title" value="New thought..." id="title-input" />
-               <textarea name="text" id="text-input">Put thought here. (Formatting is either Markup or plain text only.)</textarea>
-               <input id="submit" type="submit" value="push" />
-            </form>
-            <div class="clearfix"></div>
          </div>
 
-         <h2>Most recent thoughts</h2>
          <%= erb(:thoughts, :locals => {:posts => posts}) %> 
 
          <%= erb :footer %> 

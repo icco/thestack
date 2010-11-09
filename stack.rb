@@ -1,16 +1,25 @@
 #!/usr/bin/env ruby
 # An app for saving ideas. Uses Erb and Less for theming.
 
+# The libs we require
 require 'rubygems'
-require 'sinatra'
-require 'less'
-require 'sequel'
-require 'rdiscount'
+require 'sinatra'    # Webserver
+require 'less'       # CSS+
+require 'sequel'     # super easy DBO
+require 'rdiscount'  # Markdown processor
+require 'logger'     # ...
 
 # Always run at launch
 configure do
    set :sessions, true
    DB = Sequel.connect('sqlite://theStack.db')
+
+   # Print all queries to stdout
+   logger = Logger.new(STDOUT)
+   def logger.format_message(level, time, progname, msg)
+      " DATABASE - - [#{time.strftime("%d/%b/%Y %H:%M:%S")}] #{msg}\n"
+   end 
+   DB.loggers << logger
 end
 
 get '/' do
@@ -18,9 +27,7 @@ get '/' do
 end
 
 post '/' do
-   p params.inspect
-
-   # I really need to validate this...
+   # Validation is done by the Post object.
    text = params[:text]
    title = params[:title]
    parent = params[:parent].nil? ? 0 : params[:parent].to_i
@@ -33,11 +40,17 @@ post '/' do
    d.parent = parent
    d.save
 
+   # We've saved. Get the hell out of here.
    redirect "/view/#{d.postid}";
+end
+
+get '/view' do
+   redirect '/'
 end
 
 get '/view/:id' do
    p = Post.build params[:id]
+
    if p
       erb :view, :locals => {
          :post => p,
@@ -47,6 +60,12 @@ get '/view/:id' do
       status 404
       "Not found"
    end
+end
+
+get '/search/:string' do
+   query = params[:string]
+   posts = Post::search(query)
+   erb :search, :locals => { :posts => posts }
 end
 
 get '/style.css' do
@@ -68,7 +87,7 @@ get '/env' do
    out
 end
 
-# So normall we would put this in a serperate file. But we are trying to keep
+# So normally we would put this in a serperate file. But we are trying to keep
 # this all compact and what not.
 #
 # Anyway, this deals with the posts. It's definition is built off of what is in
@@ -83,8 +102,8 @@ class Post < Sequel::Model(:posts)
 
       case distance
          when 0 .. 59 then "#{distance} seconds ago"
-         when 60 .. (3600-1) then  "#{distance/60} minutes ago"
-         when 3600 .. (3600*24-1) then  "#{distance/360} hours ago"
+         when 60 .. (3599) then  "#{distance/60} minutes ago"
+         when 3600 .. ((3600*24)-1) then  "#{distance/360} hours ago"
          when (3600*24) .. (3600*24*30) then  "#{distance/(3600*24)} days ago"
          else Time.at(self.date).strftime("%m/%d/%Y")
       end
@@ -95,12 +114,14 @@ class Post < Sequel::Model(:posts)
    end
 
    def nice_text
-      md = RDiscount.new(self.text, :smart)
+      md = RDiscount.new(CGI::unescapeHTML(self.text), :smart)
       return md.to_html
    end
 
+   # strips out html of rendered version and returns 100 characters
    def blurb
-      return self.text.slice(0..100)
+      post = self.text.length > 100 ? '...' : ''
+      return self.nice_text.gsub(/<\/?[^>]+?>/, '').delete("\n").slice(0..100) + post
    end
 
    def children
@@ -132,5 +153,8 @@ class Post < Sequel::Model(:posts)
    def Post.getPosts
       Post.order(:date.desc).limit(10)
    end
-end
 
+   def Post.search string
+      Post.order(:date.desc).limit(10)
+   end
+end

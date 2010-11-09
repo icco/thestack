@@ -1,6 +1,5 @@
 
 <div id="thoughts" class="clearfix">
-   <h2>Most recent thoughts</h2>
    <% for item in posts %>
       <div class="thought">
          <a href="/view/<%= item[:postid] %>"><%= item.title %></a> on <%= item.nice_date %>.
