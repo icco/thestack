@@ -140,6 +140,10 @@ class Post < Sequel::Model(:posts)
       return self.nice_text.gsub(/<\/?[^>]+?>/, '').delete("\n").slice(0..100) + post
    end
 
+   def size 
+      return "#{self.text.length/128} kb"
+   end
+
    def children
       return @children
    end
