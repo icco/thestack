@@ -122,6 +122,11 @@ class Post < Sequel::Model(:posts)
       inspect
    end
 
+   # Needs to create revisions on save.
+   def save
+      super
+   end
+
    # Makes the classic "x thing ago"
    #
    # TODO: deal with 1 second, 1 minute, etc
