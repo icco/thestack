@@ -40,6 +40,7 @@ This list doesn't have any real order to it, just stuff I want to get done at so
  * Editing posts
  * revision history
  * upload image to third party image host
+   * could be basically a type of children
  * related
    * LSI, like Jekyll...?
  * Add support for adding children
