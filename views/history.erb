@@ -1,0 +1,23 @@
+<html>
+   <head>
+      <title><%= post.title %> History > theStack!</title>
+      <%= erb :includes %> 
+   </head>
+   <body>
+      <div id="cont">
+         <%= erb(:header, :locals => {:search => "" }) %> 
+
+         <div id="main" class="clearfix">
+            <% for item in posts %>
+               <div class="hist">
+                  <h2>Title: <%= item.title %>.</h2>
+                  <p><%= item.text %></p>
+                  <div class="meta"><%= item.date%></div>
+               </div>
+            <% end %>
+         </div>
+
+         <%= erb :footer %> 
+      </div>
+   </body>
+</html>

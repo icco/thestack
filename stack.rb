@@ -70,6 +70,20 @@ get '/view/:id/raw' do
    end
 end
 
+get '/history/:id' do
+   p = Post.build params[:id]
+
+   if p
+      erb :history, :locals => {
+         :post => p,
+         :posts => p.revisions
+      }
+   else 
+      status 404
+      "Not found"
+   end
+end
+
 get '/edit/:id' do
    p = Post.build params[:id]
 
@@ -204,6 +218,14 @@ class Post < Sequel::Model(:posts)
 
    def children
       return Post.filter(:parent => self.postid)
+   end
+
+   def children?
+      return self.children.count > 0
+   end
+
+   def revisions
+      PostRevision.filter(:postid => self.postid).order(:revisionid.desc)
    end
 
    def Post.build id

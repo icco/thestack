@@ -1,6 +1,8 @@
 /**
  * This is where the JS for theStack will go.
- * We can assume Mootools 1.3 has been loaded.
+ * We can assume Mootools 1.3 (core/more) has been loaded.
+ *
+ * @author Nat Welch
  */
 window.addEvent('domready', function() {
 
