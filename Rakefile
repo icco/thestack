@@ -69,7 +69,6 @@ task :test => [:clean, :db] do
       STDOUT.flush
 
       (0..15).each {|y|
-         sleep 1
          p.title = Faker::Lorem.sentence
          p.text = Faker::Lorem.paragraphs
          p.date = Time.now.to_i
