@@ -1,7 +1,7 @@
 <div id="thoughts" class="clearfix">
    <% for item in posts %>
       <div class="thought children_<%= item.children? %>">
-         <a href="/view/<%= item.postid %>"><%= item.title %></a>.
+         <a href="/view/<%= item.postid %>"><%= item.title %></a>
          <p><%= item.blurb %></p>
          <div class="meta"><%= item.nice_date %></div>
       </div>
