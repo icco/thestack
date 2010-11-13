@@ -10,8 +10,9 @@ The general idea is a pile of notes and ideas that are searchable.
 
 ## Installation 
 
- * if you are on Debian, make sure you install `libsqlite3-dev`, `ruby-deb` and `libopenssl-ruby`
+ * if you are on Debian, make sure you install `libsqlite3-dev`, `ruby-dev` and `libopenssl-ruby`
  * You need to install all of the gems listed in .gems.
+   * less sinatra rdiscount sequel sqlite3-ruby differ
  * This works better on ruby 1.8, but should work in 1.9 as well.
  * to launch, run `rake`.
  * point your browser at <http://localhost:4567>
