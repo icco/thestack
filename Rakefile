@@ -1,4 +1,6 @@
 require "rubygems"
+
+# Import in official clean and clobber tasks
 require 'rake/clean'
 CLEAN.include("*.db")
 
@@ -28,25 +30,25 @@ desc "Create local db."
 task :db do
    require "sequel"
 
-	DB = Sequel.connect("sqlite://#{DB_CONST}")
-	DB.create_table! :posts do
-		primary_key :postid
-		Text :text
-		String :title, :default => ""
-		Integer :date, :default => 0
-		Integer :parent, :default => 0
-	end
+   DB = Sequel.connect("sqlite://#{DB_CONST}")
+   DB.create_table! :posts do
+      primary_key :postid
+      Text :text
+      String :title, :default => ""
+      Integer :date, :default => 0
+      Integer :parent, :default => 0
+   end
 
-	DB.create_table! :revisions do
-		primary_key :revisionid
-		Text :text
-		String :title, :default => ""
-		Integer :date, :default => 0
-		Integer :parent, :default => 0
+   DB.create_table! :revisions do
+      primary_key :revisionid
+      Text :text
+      String :title, :default => ""
+      Integer :date, :default => 0
+      Integer :parent, :default => 0
       foreign_key(:postid, :posts)
-	end
+   end
 
-	puts "Database built."
+   puts "Database built."
 end
 
 desc "Fill the DB with test data."
