@@ -19,7 +19,7 @@ configure do
    logger = Logger.new(STDOUT)
    def logger.format_message(level, time, progname, msg)
       " DATABASE - - [#{time.strftime("%d/%b/%Y %H:%M:%S")}] #{msg}\n"
-   end 
+   end
    DB.loggers << logger
 
    Differ.format = :html
@@ -36,7 +36,7 @@ post '/' do
    parent = params[:parent].nil? ? 0 : params[:parent].to_i
 
    # Build and save the object
-   d = Post.new 
+   d = Post.new
    d.text = text
    d.title = title
    d.date = Time.now.to_i
@@ -55,7 +55,7 @@ get '/view/:id' do
          :post => p,
          :posts => Post.getPosts
       }
-   else 
+   else
       status 404
       "Not found"
    end
@@ -67,7 +67,7 @@ get '/view/:id/raw' do
    if p
       content_type 'text/plain', :charset => 'utf-8'
       p.text
-   else 
+   else
       status 404
       "Not found"
    end
@@ -81,7 +81,7 @@ get '/history/:id' do
          :post => p,
          :posts => p.revisions
       }
-   else 
+   else
       status 404
       "Not found"
    end
@@ -92,7 +92,7 @@ get '/edit/:id' do
 
    if p
       erb :edit, :locals => { :post => p }
-   else 
+   else
       status 404
       "Not found"
    end
@@ -108,7 +108,7 @@ post '/edit/:id' do
       p.save
 
       redirect "/view/#{p.postid}"
-   else 
+   else
       status 404
       "Not found"
    end
@@ -123,9 +123,9 @@ get '/search/:string' do
    query = CGI::unescape params[:string]
    posts = Post::search(query)
    p query
-   erb :search, :locals => { 
-      :posts => posts, 
-      :search => query 
+   erb :search, :locals => {
+      :posts => posts,
+      :search => query
    }
 end
 
@@ -206,11 +206,11 @@ class Post < Sequel::Model(:posts)
    end
 
    # Gives a rough idea of how "big" this post is.
-   def size 
+   def size
       charPerKb = 128.to_f
 
-      text_size = self.text.length.to_f/charPerKb 
-      title_size = self.title.length.to_f/charPerKb 
+      text_size = self.text.length.to_f/charPerKb
+      title_size = self.title.length.to_f/charPerKb
 
       return "#{text_size + title_size} kb"
    end
