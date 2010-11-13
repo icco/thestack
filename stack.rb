@@ -40,6 +40,7 @@ post '/' do
    d.text = text
    d.title = title
    d.date = Time.now.to_i
+   d.tags = params[:tags]
    d.parent = parent
    d.save
 
@@ -102,9 +103,10 @@ post '/edit/:id' do
    p = Post.build params[:id]
 
    if p
-      p.text = params[:text]
+      p.text  = params[:text]
       p.title = params[:title]
-      p.date = Time.now.to_i
+      p.tags  = params[:tags]
+      p.date  = Time.now.to_i
       p.save
 
       redirect "/view/#{p.postid}"
@@ -289,11 +291,11 @@ class PostRevision < Sequel::Model(:revisions)
 
    def PostRevision.build post
       pr = PostRevision.new
-      pr.postid = post.postid
-      pr.text = post.text
-      pr.title = post.title
-      pr.date = Time.now.to_i
-      pr.parent = post.parent
+
+      Post.columns.each{|col|
+         eval("pr.#{col} = post.#{col}")
+      }
+
       pr.save
    end
 end
