@@ -49,17 +49,32 @@ task :db do
 	puts "Database built."
 end
 
-desc "Run test suite."
-task :test do
-	puts <<-WHOA
+desc "Fill the DB with test data."
+task :test => [:clean, :db] do
+   require 'faker' # http://faker.rubyforge.org/
+   require 'stack'
 
-      Whoa there, cowboy. Let's not get hasty.
-      I mean, who seriously writes tests these days?
+   (0..25).each {|x|
+      p = Post.new
+      p.title = Faker::Lorem.sentence
+      p.text = Faker::Lorem.paragraphs
+      p.date = Time.now.to_i
+      p.save
 
-   WHOA
-end
+      print "-"
+      STDOUT.flush
 
-desc "Gets us back to a fresh install."
-task :clean do
-   FileUtils.rm Dir.glob('*.db')
+      (0..15).each {|y|
+         sleep 1
+         p.title = Faker::Lorem.sentence
+         p.text = Faker::Lorem.paragraphs
+         p.date = Time.now.to_i
+         p.save
+         print "."
+         STDOUT.flush
+      }
+
+   }
+
+   puts "Data Generation Finished."
 end
