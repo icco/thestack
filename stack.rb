@@ -74,6 +74,29 @@ get '/view/:id/raw' do
    end
 end
 
+get '/edit/:id' do
+   p = Post.build params[:id]
+
+   if p
+      erb :edit, :locals => { :post => p }
+   else 
+      status 404
+      "Not found"
+   end
+end
+
+post '/edit/:id' do
+   p = Post.build params[:id]
+
+   p.text = params[:text]
+   p.title = params[:title]
+   p.date = Time.now.to_i
+   p.save
+
+   redirect "/view/#{p.postid}"
+end
+
+
 get '/search/?' do
    redirect '/'
 end
@@ -125,6 +148,8 @@ class Post < Sequel::Model(:posts)
    # Needs to create revisions on save.
    def save
       super
+
+      PostRevision.build self
    end
 
    # Makes the classic "x thing ago"
@@ -159,41 +184,37 @@ class Post < Sequel::Model(:posts)
    end
 
    def size 
-      return "#{self.text.length/128} kb"
+      return "#{self.text.length.to_f/128.to_f} kb"
    end
 
    def children
-      return @children
-   end
-
-   def children= x
-      @children = x
+      return DB[:posts][:parent => id]
    end
 
    def Post.build id
-      row = DB[:posts][:postid => id]
-
-      if !row
-         return nil
-      else
-         p = Post.new
-         p.date = row[:date]
-         p.title = row[:title]
-         p.postid = row[:postid]
-         p.text = row[:text]
-         p.parent = row[:parent]
-         p.children = DB[:posts][:parent => id]
-
-         return p
-      end
+      Post.find(:postid => id)
    end
 
    def Post.getPosts
       Post.order(:date.desc).limit(10)
    end
 
-   # a simple search
+   # a very simple search
    def Post.search string
       Post.filter(:title.like("%#{string}%") | :text.like("%#{string}%"))
    end
 end
+
+class PostRevision < Sequel::Model(:revisions)
+   def PostRevision.build post
+      pr = PostRevision.new
+      pr.postid = post.postid
+      pr.text = post.text
+      pr.title = post.title
+      pr.date = Time.now.to_i
+      pr.parent = post.parent
+      pr.save
+   end
+end
+
+

@@ -35,6 +35,15 @@ task :db do
 		Integer :parent, :default => 0
 	end
 
+	DB.create_table! :revisions do
+		primary_key :revisionid
+		Text :text
+		String :title, :default => ""
+		Integer :date, :default => 0
+		Integer :parent, :default => 0
+      foreign_key(:postid, :posts)
+	end
+
 	puts "Database built."
 end
 
