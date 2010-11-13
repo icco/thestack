@@ -7,7 +7,7 @@ require 'sinatra'       # Webserver
 require 'less'          # CSS+
 require 'sequel'        # super easy DBO
 require 'rdiscount'     # Markdown processor
-require 'differ'
+require 'differ'        # https://github.com/pvande/differ
 require 'logger'        # ...
 
 # Always run at launch
@@ -114,14 +114,6 @@ post '/edit/:id' do
    end
 end
 
-get %r{/(view|edit)/?} do
-   redirect '/'
-end
-
-get '/search/?' do
-   redirect '/'
-end
-
 post '/search' do
    cleaned = CGI::escape params[:string].strip
    redirect "/search/#{cleaned}"
@@ -140,6 +132,10 @@ end
 get '/style.css' do
    content_type 'text/css', :charset => 'utf-8'
    less :style
+end
+
+get %r{/(view|edit|history|search)/?} do
+   redirect '/'
 end
 
 # TODO: Turn this into a template?
@@ -245,9 +241,10 @@ class Post < Sequel::Model(:posts)
    end
 end
 
+# TODO: make a library to deal with ugly code duplication.
 class PostRevision < Sequel::Model(:revisions)
    def diff_text
-      previous = PostRevision.find({:postid => self.postid} & (:revisionid < self.revisionid))
+      previous = self.previous
 
       if previous
          diff = Differ.diff_by_word(self.text, previous.text)
@@ -259,7 +256,7 @@ class PostRevision < Sequel::Model(:revisions)
    end
 
    def diff_title
-      previous = PostRevision.find({:postid => self.postid} & (:revisionid < self.revisionid))
+      previous = self.previous
 
       if previous
          diff = Differ.diff_by_word(self.title, previous.title)
@@ -268,6 +265,26 @@ class PostRevision < Sequel::Model(:revisions)
       end
 
       return diff
+   end
+
+   def nice_date
+      distance = self.date ? Time.now.to_i - self.date : 0
+
+      out = case distance
+            when 0 .. 59 then "#{distance} seconds ago"
+            when 60 .. (60*60) then "#{distance/60} minutes ago"
+            when (60*60) .. (60*60*24) then "#{distance/(60*60)} hours ago"
+            when (60*60*24) .. (60*60*24*30) then "#{distance/((60*60)*24)} days ago"
+            else Time.at(self.date).strftime("%m/%d/%Y")
+         end
+
+      out.sub(/^1 (\w+)s ago$/, '1 \1 ago')
+   end
+
+   def previous
+      PostRevision.filter(
+         {:postid => self.postid} & (:revisionid < self.revisionid)
+      ).order(:revisionid.desc).first
    end
 
    def PostRevision.build post

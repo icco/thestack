@@ -32,6 +32,18 @@ body {
    padding: 0;
 }
 
+/** 
+ * Fix float problem.
+ * http://www.positioniseverything.net/easyclearing.html 
+ */
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
 .markdown {
    font: 13.34px helvetica, arial, freesans, clean, sans-serif;
    padding: 0.7em;
@@ -118,18 +130,6 @@ body {
    }
 }
 
-/** 
- * Fix float problem.
- * http://www.positioniseverything.net/easyclearing.html 
- */
-.clearfix:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
- }
-
 #cont {
    width: 100%;
    margin-left: auto;
@@ -214,6 +214,46 @@ body {
       margin-right: 25px;
       margin-top: 10px;
       text-align: right;
+   }
+
+   .hist {
+      padding: 10px 0;
+       font-family: "Monaco","Lucida Console","Courier New","Courier",monospace;
+
+      .title {
+         font-size: 1.1em;
+      }
+
+      .meta {
+         margin-right: 25px;
+         margin-top: 5px;
+         text-align: right;
+      }
+
+      .body {
+         font: 13.34px;
+         padding: 0.7em;
+         border: 1px solid #E9E9E9;
+         background: #F8F8F8;
+      }
+
+      del, ins {
+         text-decoration: none;
+      }
+
+      del {
+         background-color: #FFDDDD;
+         border-color: red;
+         border-style: solid;
+         border-width: 1px;
+      }
+
+      ins {
+         background-color: #DDFFDD;
+         border-color: green;
+         border-style: solid;
+         border-width:  1px;
+      }
    }
 }
 

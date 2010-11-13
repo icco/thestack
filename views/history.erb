@@ -8,10 +8,14 @@
          <%= erb(:header, :locals => {:search => "" }) %> 
 
          <div id="main" class="clearfix">
+            <div>
+               <a href="/view/<%= post.postid %>">Back to Post...</a>
+            </div>
             <% for item in posts %>
                <div class="hist">
-                  <div><%= item.diff_title %></div>
-                  <div><%= item.diff_text%></div>
+                  <div class="title"><%= item.diff_title %></div>
+                  <div class="body"><%= item.diff_text %></div>
+                  <div class="meta"><%= item.nice_date %></div>
                </div>
             <% end %>
          </div>
