@@ -68,7 +68,7 @@ task :test => [:clean, :db] do
       print "-"
       STDOUT.flush
 
-      (0..15).each {|y|
+      (0..5).each {|y|
          p.title = Faker::Lorem.sentence
          p.text = Faker::Lorem.paragraphs
          p.date = Time.now.to_i
@@ -77,7 +77,22 @@ task :test => [:clean, :db] do
          STDOUT.flush
       }
 
+      p.tags = "generated"
+      p.save
    }
 
-   puts "Data Generation Finished."
+   # Tests from http://six.pairlist.net/pipermail/markdown-discuss/2004-December/000909.html
+   Dir.glob("tests/*.t*").each {|fname|
+      p = Post.new
+      p.title = fname
+      p.text = IO.read fname
+      p.date = Time.now.to_i
+      p.tags = "markdown"
+      p.save
+
+      print "-"
+      STDOUT.flush
+   }
+
+   puts " Data Generation Finished."
 end
