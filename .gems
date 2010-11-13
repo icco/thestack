@@ -3,3 +3,4 @@ sinatra
 rdiscount
 sequel
 sqlite3-ruby
+differ

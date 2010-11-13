@@ -3,11 +3,12 @@
 
 # The libs we require
 require 'rubygems'
-require 'sinatra'    # Webserver
-require 'less'       # CSS+
-require 'sequel'     # super easy DBO
-require 'rdiscount'  # Markdown processor
-require 'logger'     # ...
+require 'sinatra'       # Webserver
+require 'less'          # CSS+
+require 'sequel'        # super easy DBO
+require 'rdiscount'     # Markdown processor
+require 'differ'
+require 'logger'        # ...
 
 # Always run at launch
 configure do
@@ -20,6 +21,8 @@ configure do
       " DATABASE - - [#{time.strftime("%d/%b/%Y %H:%M:%S")}] #{msg}\n"
    end 
    DB.loggers << logger
+
+   Differ.format = :html
 end
 
 get '/' do
@@ -243,6 +246,30 @@ class Post < Sequel::Model(:posts)
 end
 
 class PostRevision < Sequel::Model(:revisions)
+   def diff_text
+      previous = PostRevision.find({:postid => self.postid} & (:revisionid < self.revisionid))
+
+      if previous
+         diff = Differ.diff_by_word(self.text, previous.text)
+      else
+         diff = Differ.diff_by_word(self.text, "")
+      end
+
+      return diff
+   end
+
+   def diff_title
+      previous = PostRevision.find({:postid => self.postid} & (:revisionid < self.revisionid))
+
+      if previous
+         diff = Differ.diff_by_word(self.title, previous.title)
+      else
+         diff = Differ.diff_by_word(self.title, "")
+      end
+
+      return diff
+   end
+
    def PostRevision.build post
       pr = PostRevision.new
       pr.postid = post.postid

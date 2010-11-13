@@ -10,9 +10,8 @@
          <div id="main" class="clearfix">
             <% for item in posts %>
                <div class="hist">
-                  <h2>Title: <%= item.title %>.</h2>
-                  <p><%= item.text %></p>
-                  <div class="meta"><%= item.date%></div>
+                  <div><%= item.diff_title %></div>
+                  <div><%= item.diff_text%></div>
                </div>
             <% end %>
          </div>
