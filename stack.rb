@@ -192,6 +192,27 @@ class Post < Sequel::Model(:posts)
       out.sub(/^1 (\w+)s ago$/, '1 \1 ago')
    end
 
+   def tags 
+      super 
+
+      # Cool idea, couldn't get working...
+      #def + x
+      #   self.tags = self.tags.to_s + " #{x}"
+      #end
+
+      #def to_a
+      #   self.tags.split(' ')
+      #end
+   end
+
+   def tags_a
+      self.tags.split(' ')
+   end
+
+   def add_tag x
+      self.tags = self.tags + " #{x}"
+   end
+
    def title
       if super.empty? then "Post ##{self.postid}" else super end
    end
@@ -239,7 +260,7 @@ class Post < Sequel::Model(:posts)
 
    # a very simple search
    def Post.search string
-      Post.filter(:title.like("%#{string}%") | :text.like("%#{string}%"))
+      Post.filter(:title.like("%#{string}%") | :text.like("%#{string}%") | :tags.like("%#{string}%"))
    end
 end
 
@@ -264,6 +285,18 @@ class PostRevision < Sequel::Model(:revisions)
          diff = Differ.diff_by_word(self.title, previous.title)
       else
          diff = Differ.diff_by_word(self.title, "")
+      end
+
+      return diff
+   end
+
+   def diff_tags
+      previous = self.previous
+
+      if previous
+         diff = Differ.diff_by_word(self.tags, previous.tags)
+      else
+         diff = Differ.diff_by_word(self.tags, "")
       end
 
       return diff

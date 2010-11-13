@@ -77,7 +77,7 @@ task :test => [:clean, :db] do
          STDOUT.flush
       }
 
-      p.tags = "generated"
+      p.add_tag "generated"
       p.save
    }
 
@@ -87,7 +87,7 @@ task :test => [:clean, :db] do
       p.title = fname
       p.text = IO.read fname
       p.date = Time.now.to_i
-      p.tags = "markdown"
+      p.add_tag "markdown"
       p.save
 
       print "-"

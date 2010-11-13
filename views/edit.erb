@@ -13,6 +13,7 @@
                <textarea name="text" id="text-input" alt="Put content here (Formatting language is Markdown)."><%= post.text %></textarea>
                <input type="text" name="tags" alt="space seperated tags" value="<%= post.tags %>" id="tags-input" />
                <input id="submit" type="submit" value="edit" />
+               <a href="/view/<%= post.postid %>" id="cancel-button">abort</a>
             </form>
             <div class="clearfix"></div>
          </div>
