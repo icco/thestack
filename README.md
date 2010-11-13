@@ -45,3 +45,5 @@ This list doesn't have any real order to it, just stuff I want to get done at so
  * related
    * LSI, like Jekyll...?
  * Add support for adding children
+ * Caching
+   * even just session caching. The number of repeat queries is just silly.
