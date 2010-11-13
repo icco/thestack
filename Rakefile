@@ -1,4 +1,6 @@
 require "rubygems"
+require 'rake/clean'
+CLEAN.include("*.db")
 
 # Define the Database.
 DB_CONST = "theStack.db"
