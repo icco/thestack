@@ -2,3 +2,14 @@
  * This is where the JS for theStack will go.
  * We can assume Mootools 1.3 has been loaded.
  */
+window.addEvent('domready', function() {
+
+   // Hover text over empty fields
+   $$('.post-form').each(function(el) {
+      var title = $('title-input');
+      var text = $('text-input');
+
+      var ot1 = new OverText(title);
+      var ot2 = new OverText(text);
+   });
+});

@@ -1,16 +1,14 @@
 <html>
    <head>
-      <title>theStack!</title>
-      <link href="/style.css" media="screen" rel="stylesheet" type="text/css" />
-      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/mootools/1.3.0/mootools-yui-compressed.js"></script>
-      <script type="text/javascript" src="/stack.js"></script>
+      <title><%= post.title %> > theStack!</title>
+      <%= erb :includes %> 
    </head>
    <body>
       <div id="cont">
          <%= erb(:header, :locals => {:search => "" }) %> 
 
          <div id="main">
-            <form method="post">
+            <form class="post-form" method="post">
                <input type="text" name="title" value="<%= post.title %>" id="title-input" />
                <textarea name="text" id="text-input"><%= post.text %></textarea>
                <input id="submit" type="submit" value="edit" />
