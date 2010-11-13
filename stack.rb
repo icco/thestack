@@ -202,7 +202,7 @@ class Post < Sequel::Model(:posts)
    # strips out html of rendered version and returns 100 characters
    def blurb
       post = self.text.length > 100 ? '...' : ''
-      return self.nice_text.gsub(/<\/?[^>]+?>/, '').delete("\n").slice(0..100) + post
+      return self.nice_text.gsub(/<\/?[^>]+?>/, '').delete("\n").slice(0..100).rstrip + post
    end
 
    # Gives a rough idea of how "big" this post is.
