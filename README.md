@@ -35,7 +35,6 @@ I am incredibly forgetful. So here is a list of references for when I'm trying t
 This list doesn't have any real order to it, just stuff I want to get done at some point. 
 
  * tag posts
- * Test on mobile devices
  * add HTML5 Offline support / Syncing
    * Maybe instead create syncing with Amazon's SDB.
    * Or maybe a heroku site that's purely an API for syncing.
@@ -49,3 +48,8 @@ This list doesn't have any real order to it, just stuff I want to get done at so
  * Maybe make it hosted? 
    * Add user support
       * would the entire site be private for that user?
+ * Deal with mobile users.
+   * I mean if the thing is hosted, then you could just go to a page, or I could write and API and have others write clients.
+   * The best solution is to mirror baccon file
+      * upside, low cost for me
+      * downside, limits adoption because users need an amazon sdb account...
