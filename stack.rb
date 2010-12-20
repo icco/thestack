@@ -9,6 +9,7 @@ require 'sequel'        # super easy DBO
 require 'rdiscount'     # Markdown processor
 require 'differ'        # https://github.com/pvande/differ
 require 'logger'        # ...
+require 'time'          # Monkey patching for 1.9
 
 # Always run at launch
 configure do
@@ -16,11 +17,11 @@ configure do
    DB = Sequel.connect('sqlite://theStack.db')
 
    # Print all queries to stdout
-   logger = Logger.new(STDOUT)
-   def logger.format_message(level, time, progname, msg)
+   dblogger = Logger.new(STDOUT)
+   def dblogger.format_message(level, time, progname, msg)
       " DATABASE - - [#{time.strftime("%d/%b/%Y %H:%M:%S")}] #{msg}\n"
    end
-   DB.loggers << logger
+   DB.loggers << dblogger
 
    Differ.format = :html
 end
@@ -116,6 +117,16 @@ post '/edit/:id' do
    end
 end
 
+get '/tag/:tagname' do
+   tagname = params[:tagname] # This could be a security problem...
+   posts = Post::tagsearch(tagname)
+   erb :search, :locals => {
+      :posts => posts,
+      :search => ""
+   }
+end
+
+
 post '/search' do
    cleaned = CGI::escape params[:string].strip
    redirect "/search/#{cleaned}"
@@ -145,7 +156,7 @@ get '/about' do
    "I am running Sinatra version #{Sinatra::VERSION}."
 end
 
-# TODO: Delete...
+# Dumps all of the environment variables.
 #get '/env' do
 #   out = "<pre>\n"
 #   ENV.to_hash.each_pair {|a, b| out += "#{a}: #{b}\n" }
@@ -209,6 +220,7 @@ class Post < Sequel::Model(:posts)
    end
 
    def add_tag x
+      self.tags = "" if self.tags.nil?
       self.tags = self.tags + " #{x}"
    end
 
@@ -260,6 +272,10 @@ class Post < Sequel::Model(:posts)
    # a very simple search
    def Post.search string
       Post.filter(:title.like("%#{string}%") | :text.like("%#{string}%") | :tags.like("%#{string}%"))
+   end
+
+   def Post.tagsearch tag
+      Post.filter(:tags.like("%#{tag}%"))
    end
 end
 

@@ -33,11 +33,11 @@ task :db do
    DB = Sequel.connect("sqlite://#{DB_CONST}")
    DB.create_table! :posts do
       primary_key :postid
-      Text     :text
+      Text     :text,  :default => ""
       String   :title,  :default => ""
       Integer  :date,   :default => 0
       Integer  :parent, :default => 0
-      String   :tags,   :default => ""
+      Text     :tags,   :default => ""
    end
 
    DB.create_table! :revisions do
@@ -47,7 +47,7 @@ task :db do
       String   :title,  :default => ""
       Integer  :date,   :default => 0
       Integer  :parent, :default => 0
-      String   :tags,   :default => ""
+      Text     :tags,   :default => ""
    end
 
    puts "Database built."
