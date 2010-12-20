@@ -12,7 +12,7 @@
                <input type="text" name="title"  alt="Post Title" value="<%= post.title %>" id="title-input" />
                <textarea name="text" id="text-input" alt="Put content here (Formatting language is Markdown)."><%= post.text %></textarea>
                <input type="text" name="tags" alt="space seperated tags" value="<%= post.tags %>" id="tags-input" />
-               <input id="submit" type="submit" value="edit" />
+               <input id="submit" type="submit" value="save" />
                <a href="/view/<%= post.postid %>" id="cancel-button">abort</a>
             </form>
             <div class="clearfix"></div>
