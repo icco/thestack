@@ -14,7 +14,7 @@ require 'time'          # Monkey patching for 1.9
 # Always run at launch
 configure do
    set :sessions, true
-   DB = Sequel.connect('sqlite://theStack.db')
+   DB = Sequel.connect("sqlite://tmp/theStack.db")
 
    # Print all queries to stdout
    dblogger = Logger.new(STDOUT)
