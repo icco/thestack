@@ -1,0 +1,50 @@
+<html>
+   <head>
+      <title>theStack!</title>
+      <%= erb :includes %> 
+      <style>
+         #search, #loginout { display: none; }
+         #login {
+            width: 295px;
+            height: 150px;
+            padding: 10px;
+            margin: 35px auto;
+         }
+
+         #pw_box, #user_box {
+            padding: 5px;
+            width: 295px;
+            margin-top: 5px;
+         }
+
+         .overTxtLabel {
+            padding: 5px;
+         }
+
+         #cancel-button:hover {
+            background-color: green !important;
+         }
+      </style>
+   </head>
+   <body>
+      <div id="cont">
+         <%= erb(:header, :locals => {}) %> 
+
+         <div id="main" class="clearfix">
+            <div id="login">
+               <form method="post">
+                  <input type="text" alt="Username" id="user_box" name="user_name" />
+                  <input type="password" alt="Password" id="pw_box" name="password" />
+                  <input type="submit" value="login" id="submit" />
+                  <a href="/signup" id="cancel-button">signup</a>
+               </form>
+         </div>
+
+         <%= erb :footer %> 
+      </div>
+      <script>
+         var ot_pw = new OverText($('pw_box'));
+         var ot_user = new OverText($('user_box'));
+      </script>
+   </body>
+</html>

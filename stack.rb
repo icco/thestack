@@ -27,26 +27,39 @@ configure do
 end
 
 before do
+   p request.path_info.inspect
    # Alright plan for users
    # first, check if they are logged in
-   #unless session['user_name']
-   #   halt "Access denied, please <a href='/login'>login</a>."
-   #end
+   if !session.has_key?('user_name') && !request.path_info.match(/(login|signup|css|js)/)
+      session['previous'] = request.path_info
+      redirect '/login'
+   end
    # if not pass request.path_info and redirect them to login
    # else continue like nothing happened.
 end
 
 get '/login' do
+   if session['user_name']
+      redirect '/'
+   end
+
    erb :login 
 end
 
 post '/login' do
-   # If user exists kinda code...
-   #if params[:name] = 'admin' and params[:password] = 'admin'
-   #   session['user_name'] = params[:name]
-   #else
-   #   redirect '/login'
-   #end
+   if params[:user_name] and params[:password]
+      session['user_name'] = params[:user_name]
+      redirectto = session['previous'] ? session['previous'] : '/'
+      session['previous'] = ""
+      redirect redirectto
+   else
+      redirect '/login'
+   end
+end
+
+get '/logout' do
+   session.delete('user_name')
+   redirect '/login'
 end
 
 get '/' do
