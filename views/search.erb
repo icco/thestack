@@ -8,9 +8,14 @@
          <%= erb(:header, :locals => {:search => search }) %> 
 
          <div id="main">
-            <h2>Here are your search results.</h2>
-
-            <%= erb(:thoughts, :locals => {:posts => posts}) %> 
+            <h2>Here are your results...</h2>
+            <ul id="search_results">
+               <% for item in posts %>
+                  <li class="search_result">
+                     <a href="/view/<%= item.postid %>"><%= item.title %></a> &sdot; posted <%= item.nice_date %>.
+                  </li>
+               <% end %>
+            </ul>
          </div>
 
          <%= erb :footer %> 
