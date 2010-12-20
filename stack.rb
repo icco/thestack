@@ -142,17 +142,16 @@ end
 
 # TODO: Turn this into a template?
 get '/about' do
-   "I'm running version " + Sinatra::VERSION
+   "I am running Sinatra version #{Sinatra::VERSION}."
 end
 
 # TODO: Delete...
-get '/env' do
-   out = "<pre>\n"
-   ENV.to_hash.each_pair {|a, b| out += "#{a}: #{b}\n" }
-   out += "</pre>\n"
-
-   out
-end
+#get '/env' do
+#   out = "<pre>\n"
+#   ENV.to_hash.each_pair {|a, b| out += "#{a}: #{b}\n" }
+#   out += "</pre>\n"
+#   out
+#end
 
 # So normally we would put this in a serperate file. But we are being lazy
 #
