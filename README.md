@@ -2,7 +2,7 @@
 
 A simple app to help you remember your ideas. Runs locally thanks to sinatra.
 
-Orginally inspired by [the data structure][1]...
+Orginally inspired by [the data structure][1]... but let's be honest, it is entirely unrelated now.
 
 ## General Concept
 
@@ -12,8 +12,8 @@ The general idea is a pile of notes and ideas that are searchable.
 
  * if you are on Debian, make sure you install `libsqlite3-dev`, `ruby-dev` and `libopenssl-ruby`
  * You need to install all of the gems listed in .gems.
-   * less sinatra rdiscount sequel sqlite3-ruby differ
- * This works better on ruby 1.8, but should work in 1.9 as well.
+   * `less`, `sinatra`, `rdiscount`, `sequel`, `sqlite3-ruby`, `differ`
+ * This works better on ruby 1.8, but should work in 1.9.2 as well.
  * to launch, run `rake`.
  * point your browser at <http://localhost:4567>
 
@@ -28,6 +28,7 @@ I am incredibly forgetful. So here is a list of references for when I'm trying t
 
  * [Sequel Cheat Sheet](http://sequel.rubyforge.org/rdoc/files/doc/cheat_sheet_rdoc.html)
  * [SQLite](http://www.sqlite.org/sqlite.html)
+ * [Markdown Dingus](http://daringfireball.net/projects/markdown/dingus)
 
 ## TODO
 
@@ -38,12 +39,13 @@ This list doesn't have any real order to it, just stuff I want to get done at so
  * add HTML5 Offline support / Syncing
    * Maybe instead create syncing with Amazon's SDB.
    * Or maybe a heroku site that's purely an API for syncing.
- * Editing posts
- * revision history
  * upload image to third party image host
    * could be basically a type of children
- * related
+ * related posts
    * LSI, like Jekyll...?
  * Add support for adding children
  * Caching
    * even just session caching. The number of repeat queries is just silly.
+ * Maybe make it hosted? 
+   * Add user support
+      * would the entire site be private for that user?
