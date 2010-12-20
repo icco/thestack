@@ -26,6 +26,29 @@ configure do
    Differ.format = :html
 end
 
+before do
+   # Alright plan for users
+   # first, check if they are logged in
+   #unless session['user_name']
+   #   halt "Access denied, please <a href='/login'>login</a>."
+   #end
+   # if not pass request.path_info and redirect them to login
+   # else continue like nothing happened.
+end
+
+get '/login' do
+   erb :login 
+end
+
+post '/login' do
+   # If user exists kinda code...
+   #if params[:name] = 'admin' and params[:password] = 'admin'
+   #   session['user_name'] = params[:name]
+   #else
+   #   redirect '/login'
+   #end
+end
+
 get '/' do
    erb :index, :locals => {:posts => Post.getPosts}
 end
@@ -125,7 +148,6 @@ get '/tag/:tagname' do
       :search => ""
    }
 end
-
 
 post '/search' do
    cleaned = CGI::escape params[:string].strip
