@@ -9,7 +9,7 @@ require 'sequel'        # super easy DBO
 require 'rdiscount'     # Markdown processor
 require 'differ'        # https://github.com/pvande/differ
 require 'logger'        # ...
-require 'time'          # Monkey patching for 1.9
+require 'time'          # Monkey patching for 1.9.2
 
 # Always run at launch
 configure do
@@ -26,11 +26,13 @@ configure do
    Differ.format = :html
 end
 
+# Right now, this deals with Auth, I'm curious if there is a smarter way to do
+# a white-list type auth scheme. 
 before do
-   p request.path_info.inspect
    # Alright plan for users
    # first, check if they are logged in
-   if !session.has_key?('user_name') && !request.path_info.match(/(login|signup|css|js)/)
+   needs_pw = /(login|signup|css|js|png|jpg)/
+   if !session.has_key?('userid') && !request.path_info.match(needs_pw)
       session['previous'] = request.path_info
       redirect '/login'
    end
@@ -39,7 +41,7 @@ before do
 end
 
 get '/login' do
-   if session['user_name']
+   if session['userid']
       redirect '/'
    end
 
@@ -47,8 +49,11 @@ get '/login' do
 end
 
 post '/login' do
-   if params[:user_name] and params[:password]
-      session['user_name'] = params[:user_name]
+   userid = User::auth(params[:user_name], params[:password])
+   if userid
+      session['userid'] = userid
+
+      # TODO: There has to be a better way to do this redirect bs.
       redirectto = session['previous'] ? session['previous'] : '/'
       session['previous'] = ""
       redirect redirectto
@@ -58,7 +63,7 @@ post '/login' do
 end
 
 get '/logout' do
-   session.delete('user_name')
+   session.delete('userid')
    redirect '/login'
 end
 
@@ -380,5 +385,11 @@ class PostRevision < Sequel::Model(:revisions)
       }
 
       pr.save
+   end
+end
+
+class User < Sequel::Model(:users)
+   def User.auth user, pw
+      return true
    end
 end
