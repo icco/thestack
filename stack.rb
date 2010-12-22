@@ -11,6 +11,10 @@ require 'differ'        # https://github.com/pvande/differ
 require 'logger'        # ...
 require 'time'          # Monkey patching for 1.9.2
 
+# our code
+Dir[File.dirname(__FILE__) + '/lib/*.rb'].each {|file| require file }
+
+
 # Always run at launch
 configure do
    set :sessions, true
