@@ -29,15 +29,13 @@ I am incredibly forgetful. So here is a list of references for when I'm trying t
  * [Sequel Cheat Sheet](http://sequel.rubyforge.org/rdoc/files/doc/cheat_sheet_rdoc.html)
  * [SQLite](http://www.sqlite.org/sqlite.html)
  * [Markdown Dingus](http://daringfireball.net/projects/markdown/dingus)
+ * [SDB Pricing Example](http://aws.amazon.com/simpledb/#machine-utilization-example)
 
 ## TODO
 
 This list doesn't have any real order to it, just stuff I want to get done at some point. 
 
  * tag posts
- * add HTML5 Offline support / Syncing
-   * Maybe instead create syncing with Amazon's SDB.
-   * Or maybe a heroku site that's purely an API for syncing.
  * upload image to third party image host
    * could be basically a type of children
  * related posts
