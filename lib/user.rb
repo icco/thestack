@@ -18,10 +18,11 @@ class User < Sequel::Model(:users)
 
    def User.auth user, pw
       hash = User.hash_pw pw
-      User.find(:password => hash, :username => user)
+      return User.find(:password => hash, :username => user)
    end
 
+   # This is written to mimic mysql's password function.
    def User.hash_pw pw
-      return pw
+      return "*#{Digest::SHA1.hexdigest(Digest::SHA1.digest(pw)).upcase}"
    end
 end
