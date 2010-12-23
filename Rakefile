@@ -31,23 +31,32 @@ task :db do
    require "sequel"
 
    DB = Sequel.connect("sqlite://#{DB_CONST}")
-   DB.create_table! :posts do
-      primary_key :postid
-      Text     :text,  :default => ""
-      String   :title,  :default => ""
-      Integer  :date,   :default => 0
-      Integer  :parent, :default => 0
-      Text     :tags,   :default => ""
-   end
+   #DB.create_table! :posts do
+   #   primary_key :postid
+   #   Text     :text,  :default => ""
+   #   String   :title,  :default => ""
+   #   Integer  :date,   :default => 0
+   #   Integer  :parent, :default => 0
+   #   Text     :tags,   :default => ""
+   #end
 
-   DB.create_table! :revisions do
-      primary_key :revisionid
-      foreign_key(:postid, :posts)
-      Text     :text
-      String   :title,  :default => ""
-      Integer  :date,   :default => 0
-      Integer  :parent, :default => 0
-      Text     :tags,   :default => ""
+   #DB.create_table! :revisions do
+   #   primary_key :revisionid
+   #   foreign_key(:postid, :posts)
+   #   Text     :text
+   #   String   :title,  :default => ""
+   #   Integer  :date,   :default => 0
+   #   Integer  :parent, :default => 0
+   #   Text     :tags,   :default => ""
+   #end
+
+   DB.create_table! :users do
+      primary_key :userid
+      String   :username,  :default => ""
+      String   :password,  :default => ""
+      String   :accesskey, :default => ""
+      String   :secretkey, :default => ""
+      Date     :joindate
    end
 
    puts "Database built."

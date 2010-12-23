@@ -1,6 +1,6 @@
-# This deals with the posts. It's definition is built off of what is in
-# the DB.
-class Post < Sequel::Model(:posts)
+# This deals with the posts. We can't really use active model because of the
+# way SDB works and how we use a different DB depending on the user.
+class Post
    def to_s
       inspect
    end
@@ -34,8 +34,8 @@ class Post < Sequel::Model(:posts)
       out.sub(/^1 (\w+)s ago$/, '1 \1 ago')
    end
 
-   def tags 
-      super 
+   def tags
+      super
 
       # Cool idea, couldn't get working...
       #def + x

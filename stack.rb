@@ -14,7 +14,6 @@ require 'time'          # Monkey patching for 1.9.2
 # our code
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each {|file| require file }
 
-
 # Always run at launch
 configure do
    set :sessions, true
@@ -31,7 +30,7 @@ configure do
 end
 
 # Right now, this deals with Auth, I'm curious if there is a smarter way to do
-# a white-list type auth scheme. 
+# a white-list type auth scheme.
 before do
    # Alright plan for users
    # first, check if they are logged in
@@ -49,7 +48,7 @@ get '/login' do
       redirect '/'
    end
 
-   erb :login 
+   erb :login
 end
 
 post '/login' do
@@ -199,11 +198,3 @@ end
 get '/about' do
    "I am running Sinatra version #{Sinatra::VERSION}."
 end
-
-# Dumps all of the environment variables.
-#get '/env' do
-#   out = "<pre>\n"
-#   ENV.to_hash.each_pair {|a, b| out += "#{a}: #{b}\n" }
-#   out += "</pre>\n"
-#   out
-#end
