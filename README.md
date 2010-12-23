@@ -1,18 +1,16 @@
 # theStack!
 
-A simple app to help you remember your ideas. Runs locally thanks to sinatra.
+THIS BRANCH IS HORRIBLY BROKEN AND NOT WORKING.
+
+A simple app to help you remember your ideas. The two main constraints on this are that your data is always available, no matter the device, and that you personally own the data. Imagine a stack of notes that sits in your pocket, but you need a pair of glasses to read, or something like that. The analogy kind of fails, I know.
 
 Orginally inspired by [the data structure][1]... but let's be honest, it is entirely unrelated now.
-
-## General Concept
-
-The general idea is a pile of notes and ideas that are searchable.
 
 ## Installation 
 
  * if you are on Debian, make sure you install `libsqlite3-dev`, `ruby-dev` and `libopenssl-ruby`
  * You need to install all of the gems listed in .gems.
-   * `less`, `sinatra`, `rdiscount`, `sequel`, `sqlite3-ruby`, `differ`
+   * `less`, `sinatra`, `rdiscount`, `sequel`, `sqlite3-ruby`, `differ`, `right_aws`
  * This works better on ruby 1.8, but should work in 1.9.2 as well.
  * to launch, run `rake`.
  * point your browser at <http://localhost:4567>
@@ -30,6 +28,7 @@ I am incredibly forgetful. So here is a list of references for when I'm trying t
  * [SQLite](http://www.sqlite.org/sqlite.html)
  * [Markdown Dingus](http://daringfireball.net/projects/markdown/dingus)
  * [SDB Pricing Example](http://aws.amazon.com/simpledb/#machine-utilization-example)
+ * [Right AWS Docs](http://rightscale.rubyforge.org/right_aws_gem_doc/classes/RightAws/SdbInterface.html)
 
 ## TODO
 

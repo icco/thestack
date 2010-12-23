@@ -34,19 +34,6 @@ class Post
       out.sub(/^1 (\w+)s ago$/, '1 \1 ago')
    end
 
-   def tags
-      super
-
-      # Cool idea, couldn't get working...
-      #def + x
-      #   self.tags = self.tags.to_s + " #{x}"
-      #end
-
-      #def to_a
-      #   self.tags.split(' ')
-      #end
-   end
-
    def tags_a
       self.tags.split(' ')
    end
