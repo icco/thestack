@@ -1,17 +1,17 @@
 <html>
    <head>
-      <title>Login to theStack!</title>
+      <title>Signup for theStack!</title>
       <%= erb :includes %> 
       <style>
          #search, #loginout { display: none; }
          #login {
             width: 295px;
-            height: 150px;
+            height: 260px;
             padding: 10px;
             margin: 35px auto;
          }
 
-         #pw_box, #user_box {
+         #pw_box, #pw_box2, #user_box, #access_key, #secret_key {
             padding: 5px;
             width: 295px;
             margin-top: 5px;
@@ -19,10 +19,6 @@
 
          .overTxtLabel {
             padding: 5px;
-         }
-
-         #cancel-button:hover {
-            background-color: green !important;
          }
       </style>
    </head>
@@ -35,16 +31,17 @@
                <form method="post">
                   <input type="text" alt="Username" id="user_box" name="user_name" />
                   <input type="password" alt="Password" id="pw_box" name="password" />
-                  <input type="submit" value="login" id="submit" />
-                  <a href="/signup" id="cancel-button">signup</a>
+                  <input type="text" alt="Amazon SDB Access Key" id="access_key" name="access_key" />
+                  <input type="text" alt="Amazon SDB Secret Key" id="secret_key" name="secret_key" />
+                  <input type="submit" value="sign up!" id="submit" />
+                  <a href="/" id="cancel-button">nevermind...</a>
                </form>
          </div>
 
          <%= erb :footer %> 
       </div>
       <script>
-         var ot_pw = new OverText($('pw_box'));
-         var ot_user = new OverText($('user_box'));
+         $$('input').each(function(el) { new OverText(el); });
       </script>
    </body>
 </html>

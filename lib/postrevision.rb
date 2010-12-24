@@ -1,5 +1,5 @@
 # TODO: make a library to deal with ugly code duplication.
-class PostRevision < Sequel::Model(:revisions)
+class PostRevision
    def diff_text
       previous = self.previous
 

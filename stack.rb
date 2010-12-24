@@ -10,9 +10,7 @@ require 'rdiscount'     # Markdown processor
 require 'differ'        # https://github.com/pvande/differ
 require 'logger'        # ...
 require 'time'          # Monkey patching for 1.9.2
-
-# our code
-Dir[File.dirname(__FILE__) + '/lib/*.rb'].each {|file| require file }
+require 'guid'
 
 # Always run at launch
 configure do
@@ -27,6 +25,9 @@ configure do
    DB.loggers << dblogger
 
    Differ.format = :html
+
+   # Bring in our code after we configure.
+   Dir[File.dirname(__FILE__) + '/lib/*.rb'].each {|file| require file }
 end
 
 # Right now, this deals with Auth, I'm curious if there is a smarter way to do
@@ -34,13 +35,11 @@ end
 before do
    # Alright plan for users
    # first, check if they are logged in
-   needs_pw = /(login|signup|css|js|png|jpg)/
-   if !session.has_key?('userid') && !request.path_info.match(needs_pw)
+   no_pw = /(login|signup|css|js|png|jpg)/
+   if !session.has_key?('userid') && !request.path_info.match(no_pw)
       session['previous'] = request.path_info
       redirect '/login'
    end
-   # if not pass request.path_info and redirect them to login
-   # else continue like nothing happened.
 end
 
 get '/login' do
@@ -52,13 +51,13 @@ get '/login' do
 end
 
 post '/login' do
-   userid = User::auth(params[:user_name], params[:password])
+   user = User::auth(params[:user_name], params[:password])
    if userid
-      session['userid'] = userid
+      session['userid'] = user.userid
 
       # TODO: There has to be a better way to do this redirect bs.
       redirectto = session['previous'] ? session['previous'] : '/'
-      session['previous'] = ""
+      session.delete('previous')
       redirect redirectto
    else
       redirect '/login'
@@ -68,6 +67,28 @@ end
 get '/logout' do
    session.delete('userid')
    redirect '/login'
+end
+
+get '/signup' do
+   if session['userid']
+      redirect '/'
+   else
+      erb :signup
+   end
+end
+
+post '/signup' do
+   u = User.new
+   u.accesskey = params[:access_key]
+   u.secretkey = params[:secret_key]
+   u.username  = params[:user_name] 
+   u.password  = params[:password]
+   u.joindate  = Time.now  
+   u.save
+
+   session['userid'] = u.userid
+
+   redirect '/'
 end
 
 get '/' do

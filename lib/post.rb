@@ -1,20 +1,36 @@
 # This deals with the posts. We can't really use active model because of the
 # way SDB works and how we use a different DB depending on the user.
+#
+# NOTE:
+# First you specify a bucket, a unique name for an item in the bucket, and the
+# attributes for that item. so you can imagine that the item name is the
+# primary key and all of the objects other data are the attributes.
 class Post
+   @@domain = 'thestack_posts'
+   attr_accessor :text, :title, :date, :tags
+   attr_reader :postid
+
+   def initialize
+      u = User.get session['userid']
+      @db = u.db
+
+      if @db.list_domains[:domains].index(@@domain).nil?
+         @db.create_domain @@domain
+      end
+
+      @postid = Guid.new
+   end
+
    def to_s
       inspect
    end
 
    # Needs to create revisions on save.
    def save
-      super
+      # http://rightscale.rubyforge.org/right_aws_gem_doc/classes/RightAws/SdbInterface.html#M000238
+      # Put the attributes, save a revision
 
       PostRevision.build self
-   end
-
-   # http://sequel.rubyforge.org/rdoc/files/doc/validations_rdoc.html
-   def validate
-      super
    end
 
    # Makes the classic "x thing ago"
@@ -34,13 +50,9 @@ class Post
       out.sub(/^1 (\w+)s ago$/, '1 \1 ago')
    end
 
-   def tags_a
-      self.tags.split(' ')
-   end
-
    def add_tag x
-      self.tags = "" if self.tags.nil?
-      self.tags = self.tags + " #{x}"
+      self.tags = [] if self.tags.nil?
+      self.tags[] = x
    end
 
    def title
