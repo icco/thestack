@@ -45,6 +45,8 @@ end
 
 desc "Fill the DB with test data."
 task :test => [:clean, :db] do
+   return # not rewritten since we switched database systems.
+
    require 'faker' # http://faker.rubyforge.org/
    require 'stack'
 
