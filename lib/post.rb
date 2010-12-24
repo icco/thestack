@@ -135,15 +135,52 @@ class Post
    end
 
    # a very simple search
-   # TODO: implement
-   def Post.search string
-      #Post.filter(:title.like("%#{string}%") | :text.like("%#{string}%") | :tags.like("%#{string}%"))
-      []
+   def Post.search string, userid
+      db = User.get(userid).aws_db
+
+      qstring = <<-QUERY
+         SELECT * 
+         FROM #{@@domain} 
+         WHERE title like '%#{string}%'
+            OR text  like '%#{string}%'
+      QUERY
+      query = [qstring, Time.now.to_i ]
+      values = db.select(query)[:items]
+
+      posts = []
+      values.each {|result|
+         result.each_pair {|key, data|
+            p = Post.new userid
+            p.date   = data['date'].pop.to_i
+            p.text   = data['text'].pop
+            p.title  = data['title'].pop
+            p.tags   = data['tags']
+            p.postid = key
+            posts.push(p)
+         }
+      }
+
+      return posts
    end
 
-   # TODO: implement
-   def Post.tagsearch tag
-      #Post.filter(:tags.like("%#{tag}%"))
-      []
+   def Post.tagsearch tag, userid
+      db = User.get(userid).aws_db
+      query = ["['tags' = ?]", tag]
+      values = db.query_with_attributes(@@domain, [], query)[:items]
+
+      posts = []
+      values.each {|result|
+         result.each_pair {|key, data|
+            p = Post.new userid
+            p.date   = data['date'].pop.to_i
+            p.text   = data['text'].pop
+            p.title  = data['title'].pop
+            p.tags   = data['tags']
+            p.postid = key
+            posts.push(p)
+         }
+      }
+
+      return posts
    end
 end

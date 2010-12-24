@@ -184,10 +184,10 @@ end
 
 get '/tag/:tagname' do
    tagname = params[:tagname] # This could be a security problem...
-   posts = Post::tagsearch(tagname)
+   posts = Post::tagsearch(tagname, session['userid'])
    erb :search, :locals => {
       :posts => posts,
-      :search => ""
+      :search => tagname
    }
 end
 
@@ -198,7 +198,7 @@ end
 
 get '/search/:string' do
    query = CGI::unescape params[:string]
-   posts = Post::search(query)
+   posts = Post::search(query, session['userid'])
    p query
    erb :search, :locals => {
       :posts => posts,
