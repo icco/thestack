@@ -30,7 +30,7 @@ desc "Create local db."
 task :db do
    require "sequel"
 
-   DB = Sequel.connect("sqlite://#{DB_CONST}")
+   DB = Sequel.connect(ENV['DATABASE_URL'] || "sqlite://#{DB_CONST}")
    DB.create_table! :users do
       primary_key :userid
       String   :username,  :default => ""
