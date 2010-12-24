@@ -37,17 +37,7 @@ class PostRevision
    end
 
    def nice_date
-      distance = self.date ? Time.now.to_i - self.date : 0
-
-      out = case distance
-            when 0 .. 59 then "#{distance} seconds ago"
-            when 60 .. (60*60) then "#{distance/60} minutes ago"
-            when (60*60) .. (60*60*24) then "#{distance/(60*60)} hours ago"
-            when (60*60*24) .. (60*60*24*30) then "#{distance/((60*60)*24)} days ago"
-            else Time.at(self.date).strftime("%m/%d/%Y")
-         end
-
-      out.sub(/^1 (\w+)s ago$/, '1 \1 ago')
+      Utils.nice_date self.date
    end
 
    def previous

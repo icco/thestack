@@ -52,7 +52,7 @@ end
 
 post '/login' do
    user = User::auth(params[:user_name], params[:password])
-   if userid
+   if user
       session['userid'] = user.userid
 
       # TODO: There has to be a better way to do this redirect bs.
@@ -99,15 +99,13 @@ post '/' do
    # Validation is done by the Post object.
    text = params[:text]
    title = params[:title]
-   parent = params[:parent].nil? ? 0 : params[:parent].to_i
 
    # Build and save the object
-   d = Post.new
+   d = Post.new session['userid']
    d.text = text
    d.title = title
    d.date = Time.now.to_i
    d.tags = params[:tags]
-   d.parent = parent
    d.save
 
    # We've saved. Get the hell out of here.
@@ -115,7 +113,7 @@ post '/' do
 end
 
 get '/view/:id' do
-   p = Post.build params[:id]
+   p = Post.build params[:id], session['userid']
 
    if p
       erb :view, :locals => {
@@ -129,7 +127,7 @@ get '/view/:id' do
 end
 
 get '/view/:id/raw' do
-   p = Post.build params[:id]
+   p = Post.build params[:id], session['userid']
 
    if p
       content_type 'text/plain', :charset => 'utf-8'
@@ -141,7 +139,7 @@ get '/view/:id/raw' do
 end
 
 get '/history/:id' do
-   p = Post.build params[:id]
+   p = Post.build params[:id], session['userid']
 
    if p
       erb :history, :locals => {
@@ -155,7 +153,7 @@ get '/history/:id' do
 end
 
 get '/edit/:id' do
-   p = Post.build params[:id]
+   p = Post.build params[:id], session['userid']
 
    if p
       erb :edit, :locals => { :post => p }
@@ -166,7 +164,7 @@ get '/edit/:id' do
 end
 
 post '/edit/:id' do
-   p = Post.build params[:id]
+   p = Post.build params[:id], session['userid']
 
    if p
       p.text  = params[:text]

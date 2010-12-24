@@ -8,12 +8,14 @@
 class Post
    @@domain = 'thestack_posts'
    attr_accessor :text, :title, :date, :tags
-   attr_reader :postid
+   attr_accessor :postid
+   attr_reader   :db
 
-   def initialize
-      u = User.get session['userid']
-      @db = u.db
+   def initialize userid
+      u = User.get userid
+      @db = u.aws_db
 
+      # Make sure our domain exists
       if @db.list_domains[:domains].index(@@domain).nil?
          @db.create_domain @@domain
       end
@@ -29,25 +31,25 @@ class Post
    def save
       # http://rightscale.rubyforge.org/right_aws_gem_doc/classes/RightAws/SdbInterface.html#M000238
       # Put the attributes, save a revision
+      self.date = Time.now.to_i
 
-      PostRevision.build self
+      attr = {
+         'text' => self.text,
+         'title' => self.title,
+         'date' => self.date,
+         'tags' => self.tags,
+      }
+
+      @db.put_attributes(@@domain, self.postid, attr, :replace)
+
+      #PostRevision.build self
    end
 
    # Makes the classic "x thing ago"
    #
    # TODO: deal with yesterday, words for values less than ten
    def nice_date
-      distance = self.date ? Time.now.to_i - self.date : 0
-
-      out = case distance
-            when 0 .. 59 then "#{distance} seconds ago"
-            when 60 .. (60*60) then "#{distance/60} minutes ago"
-            when (60*60) .. (60*60*24) then "#{distance/(60*60)} hours ago"
-            when (60*60*24) .. (60*60*24*30) then "#{distance/((60*60)*24)} days ago"
-            else Time.at(self.date).strftime("%m/%d/%Y")
-         end
-
-      out.sub(/^1 (\w+)s ago$/, '1 \1 ago')
+      Utils.nice_date self.date
    end
 
    def add_tag x
@@ -56,7 +58,7 @@ class Post
    end
 
    def title
-      if super.empty? then "Post ##{self.postid}" else super end
+      if @title.empty? then "Post ##{self.postid}" else @title end
    end
 
    def nice_text
@@ -80,32 +82,41 @@ class Post
       return "#{text_size + title_size} kb"
    end
 
-   def children
-      return Post.filter(:parent => self.postid)
-   end
-
-   def children?
-      return self.children.count > 0
-   end
-
+   # TODO: implement
    def revisions
-      PostRevision.filter(:postid => self.postid).order(:revisionid.desc)
+      #PostRevision.filter(:postid => self.postid).order(:revisionid.desc)
+      []
    end
 
-   def Post.build id
-      Post.find(:postid => id)
+   def Post.build id, userid
+      #Post.find(:postid => id)
+      p = Post.new userid
+      p.postid = id
+      data = p.db.get_attributes(@@domain, id)[:attributes]
+      p.date   = data['date'].pop.to_i
+      p.text   = data['text'].pop
+      p.title  = data['title'].pop
+      p.tags   = data['tags']
+
+      return p
    end
 
+   # TODO: implement
    def Post.getPosts
-      Post.order(:date.desc).limit(10)
+      #Post.order(:date.desc).limit(10)
+      []
    end
 
    # a very simple search
+   # TODO: implement
    def Post.search string
-      Post.filter(:title.like("%#{string}%") | :text.like("%#{string}%") | :tags.like("%#{string}%"))
+      #Post.filter(:title.like("%#{string}%") | :text.like("%#{string}%") | :tags.like("%#{string}%"))
+      []
    end
 
+   # TODO: implement
    def Post.tagsearch tag
-      Post.filter(:tags.like("%#{tag}%"))
+      #Post.filter(:tags.like("%#{tag}%"))
+      []
    end
 end
