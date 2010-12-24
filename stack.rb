@@ -82,9 +82,9 @@ post '/signup' do
    u = User.new
    u.accesskey = params[:access_key]
    u.secretkey = params[:secret_key]
-   u.username  = params[:user_name] 
+   u.username  = params[:user_name]
    u.password  = params[:password]
-   u.joindate  = Time.now  
+   u.joindate  = Time.now
    u.save
 
    session['userid'] = u.userid

@@ -111,7 +111,7 @@ class Post
 
    def Post.getPosts userid
       db = User.get(userid).aws_db
-      query = ["select * from #{@@domain} where date < ? order by date desc", Time.now.to_i ] 
+      query = ["select * from #{@@domain} where date < ? order by date desc", Time.now.to_i ]
       values = db.select(query)[:items]
 
       posts = []

@@ -23,7 +23,7 @@ class PostRevision
       text = previous ? previous.text : ""
 
       diff = Differ.diff_by_word(self.text, text)
-      
+
       return diff
    end
 
@@ -69,7 +69,7 @@ class PostRevision
          }
       } if !values.nil?
 
-      return !values.nil? ? posts.pop : nil 
+      return !values.nil? ? posts.pop : nil
    end
 
    def save
