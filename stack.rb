@@ -206,6 +206,11 @@ get '/search/:string' do
    }
 end
 
+get '/profile' do
+   user = User.get session['userid']
+   erb :profile, :locals => { :user => user }
+end
+
 get '/style.css' do
    content_type 'text/css', :charset => 'utf-8'
    less :style

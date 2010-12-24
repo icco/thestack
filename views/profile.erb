@@ -1,0 +1,48 @@
+<html>
+   <head>
+      <title>Your Profile - theStack!</title>
+      <%= erb :includes %> 
+      <style>
+         #login {
+            width: 350px;
+            height: 260px;
+            padding: 10px;
+            margin: 35px auto;
+         }
+
+         #pw_box, #pw_box2, #user_box, #access_key, #secret_key {
+            padding: 5px;
+            width: 350px;
+            margin-top: 5px;
+         }
+
+         .overTxtLabel {
+            padding: 5px;
+         }
+      </style>
+   </head>
+   <body>
+      <div id="cont">
+         <%= erb(:header, :locals => {}) %> 
+
+         <div id="main" class="clearfix">
+            <div id="login">
+               <h2>Your Profile</h2>
+               <form method="post">
+                  <input readonly type="text" alt="Username" id="user_box" name="user_name" value="<%= user.username %>" />
+                  <input readonly type="text" alt="Amazon SDB Access Key" id="access_key" name="access_key" value="<%= user.accesskey %>" />
+                  <input readonly type="text" alt="Amazon SDB Secret Key" id="secret_key" name="secret_key" value="<%= user.secretkey %>" />
+                  <!--
+                  <input type="submit" value="update" id="submit" />
+                  <a href="/" id="cancel-button">nevermind...</a>
+                  -->
+               </form>
+         </div>
+
+         <%= erb :footer %> 
+      </div>
+      <script>
+         $$('input').each(function(el) { new OverText(el); });
+      </script>
+   </body>
+</html>
