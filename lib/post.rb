@@ -139,8 +139,8 @@ class Post
       db = User.get(userid).aws_db
 
       qstring = <<-QUERY
-         SELECT * 
-         FROM #{@@domain} 
+         SELECT *
+         FROM #{@@domain}
          WHERE title like '%#{string}%'
             OR text  like '%#{string}%'
       QUERY
