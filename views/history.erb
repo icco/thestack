@@ -1,6 +1,6 @@
 <html>
    <head>
-      <title><%= post.title %> History > theStack!</title>
+      <title><%= post.title %> History - theStack!</title>
       <%= erb :includes %> 
    </head>
    <body>
@@ -9,7 +9,7 @@
 
          <div id="main" class="clearfix">
             <div>
-               <a href="/view/<%= post.postid %>">Back to Post...</a>
+               <a href="/view/<%= post.postid %>">Back to the post...</a>
             </div>
             <% for item in posts %>
                <div class="hist">

@@ -1,15 +1,19 @@
-require 'right_aws'
-
 class User < Sequel::Model(:users)
    def aws_db
       if !@aws_db && self.accesskey && self.secretkey
+         sdblogger = Logger.new(STDOUT)
+         def sdblogger.format_message(level, time, progname, msg)
+            "  AWS SDB - - [#{time.strftime("%d/%b/%Y %H:%M:%S")}] #{msg}\n"
+         end
+
          db_options = {
             :server              => 'sdb.amazonaws.com',
             :port                => 443,
             :protocol            => 'https',
             :signature_version   => '1',
             :multi_thread        => true,
-            :nil_representation  => ''
+            :nil_representation  => '',
+            :logger              => sdblogger
          }
 
          @aws_db = RightAws::SdbInterface.new(self.accesskey, self.secretkey, db_options)

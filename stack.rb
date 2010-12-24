@@ -10,7 +10,8 @@ require 'rdiscount'     # Markdown processor
 require 'differ'        # https://github.com/pvande/differ
 require 'logger'        # ...
 require 'time'          # Monkey patching for 1.9.2
-require 'guid'
+require 'guid'          # For unique ids in SDB (we could implement this ourselves...)
+require 'right_aws'     # Rightscale's AWS library
 
 # Always run at launch
 configure do
@@ -92,7 +93,8 @@ post '/signup' do
 end
 
 get '/' do
-   erb :index, :locals => {:posts => Post.getPosts}
+   posts = Post.getPosts session['userid']
+   erb :index, :locals => {:posts => posts }
 end
 
 post '/' do
@@ -101,15 +103,15 @@ post '/' do
    title = params[:title]
 
    # Build and save the object
-   d = Post.new session['userid']
-   d.text = text
-   d.title = title
-   d.date = Time.now.to_i
-   d.tags = params[:tags]
-   d.save
+   p = Post.new session['userid']
+   p.text = text
+   p.title = title
+   p.date = Time.now.to_i
+   p.tags = params[:tags]
+   p.save
 
    # We've saved. Get the hell out of here.
-   redirect "/view/#{d.postid}";
+   redirect "/view/#{p.postid}";
 end
 
 get '/view/:id' do
@@ -118,7 +120,7 @@ get '/view/:id' do
    if p
       erb :view, :locals => {
          :post => p,
-         :posts => Post.getPosts
+         :posts => Post.getPosts(session['userid'])
       }
    else
       status 404

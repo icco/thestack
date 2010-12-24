@@ -7,13 +7,15 @@
 # primary key and all of the objects other data are the attributes.
 class Post
    @@domain = 'thestack_posts'
-   attr_accessor :text, :title, :date, :tags
+   attr_accessor :text, :title, :date, :tags, :userid
    attr_accessor :postid
    attr_reader   :db
 
    def initialize userid
-      u = User.get userid
+      @userid = userid
+      u = User.get @userid
       @db = u.aws_db
+      @tags = []
 
       # Make sure our domain exists
       if @db.list_domains[:domains].index(@@domain).nil?
@@ -23,14 +25,9 @@ class Post
       @postid = Guid.new
    end
 
-   def to_s
-      inspect
-   end
-
    # Needs to create revisions on save.
    def save
       # http://rightscale.rubyforge.org/right_aws_gem_doc/classes/RightAws/SdbInterface.html#M000238
-      # Put the attributes, save a revision
       self.date = Time.now.to_i
 
       attr = {
@@ -42,7 +39,7 @@ class Post
 
       @db.put_attributes(@@domain, self.postid, attr, :replace)
 
-      #PostRevision.build self
+      PostRevision.build self
    end
 
    # Makes the classic "x thing ago"
@@ -50,6 +47,20 @@ class Post
    # TODO: deal with yesterday, words for values less than ten
    def nice_date
       Utils.nice_date self.date
+   end
+
+   def tags= newtags
+      if newtags.is_a? String
+         @tags = newtags.split(' ')
+      elsif newtags.is_a? Array
+         @tags = newtags
+      else
+         @tags = []
+      end
+   end
+
+   def tags
+      @tags.sort
    end
 
    def add_tag x
@@ -82,14 +93,11 @@ class Post
       return "#{text_size + title_size} kb"
    end
 
-   # TODO: implement
    def revisions
-      #PostRevision.filter(:postid => self.postid).order(:revisionid.desc)
-      []
+      PostRevision.getRevisions self
    end
 
    def Post.build id, userid
-      #Post.find(:postid => id)
       p = Post.new userid
       p.postid = id
       data = p.db.get_attributes(@@domain, id)[:attributes]
@@ -101,10 +109,25 @@ class Post
       return p
    end
 
-   # TODO: implement
-   def Post.getPosts
-      #Post.order(:date.desc).limit(10)
-      []
+   def Post.getPosts userid
+      db = User.get(userid).aws_db
+      query = ["select * from #{@@domain} where date < ?", Time.now.to_i ] 
+      values = db.select(query)[:items]
+
+      posts = []
+      values.each {|result|
+         result.each_pair {|key, data|
+            p = Post.new userid
+            p.date   = data['date'].pop.to_i
+            p.text   = data['text'].pop
+            p.title  = data['title'].pop
+            p.tags   = data['tags']
+            p.postid = key
+            posts.push(p)
+         }
+      }
+
+      return posts
    end
 
    # a very simple search
