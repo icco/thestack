@@ -48,7 +48,7 @@ get '/login' do
       redirect '/'
    end
 
-   erb :login
+   erb :login, :locals => {:user_count => User.count }
 end
 
 post '/login' do
