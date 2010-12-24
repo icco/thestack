@@ -16,4 +16,8 @@ class Utils
 
       out.sub(/^1 (\w+)s ago$/, '1 \1 ago')
    end
+
+   def Utils.guid
+      Guid.new
+   end
 end

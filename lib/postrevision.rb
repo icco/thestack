@@ -14,7 +14,7 @@ class PostRevision
          @db.create_domain @@domain
       end
 
-      self.revisionid = Guid.new
+      self.revisionid = Utils.guid
    end
 
    def diff_text

@@ -22,7 +22,7 @@ class Post
          @db.create_domain @@domain
       end
 
-      @postid = Guid.new
+      @postid = Utils.guid
    end
 
    # Needs to create revisions on save.
@@ -73,12 +73,14 @@ class Post
    end
 
    def nice_text
+      self.text = "" if self.text.nil?
       md = RDiscount.new(self.text, :smart)
       return md.to_html
    end
 
    # strips out html of rendered version and returns 100 characters
    def blurb
+      self.text = "" if self.text.nil?
       post = self.text.length > 100 ? '...' : ''
       return self.nice_text.gsub(/<\/?[^>]+?>/, '').delete("\n").slice(0..100).rstrip + post
    end
@@ -109,6 +111,8 @@ class Post
       return p
    end
 
+   # Gets the 10 most recent posts for a user.
+   # We use select here instead of query purely for education's sake.
    def Post.getPosts userid
       db = User.get(userid).aws_db
       query = ["select * from #{@@domain} where date < ? order by date desc", Time.now.to_i ]
