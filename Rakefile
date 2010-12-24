@@ -31,6 +31,7 @@ task :db do
    require "sequel"
 
    DB = Sequel.connect("sqlite://#{DB_CONST}")
+   p DB
    DB.create_table! :users do
       primary_key :userid
       String   :username,  :default => ""
