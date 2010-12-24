@@ -16,7 +16,7 @@ require 'right_aws'     # Rightscale's AWS library
 # Always run at launch
 configure do
    set :sessions, true
-   DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://thestack.db')
+   DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://tmp/theStack.db')
 
    # Print all queries to stdout
    dblogger = Logger.new(STDOUT)
