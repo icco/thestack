@@ -47,8 +47,8 @@ get '/login' do
    if session['userid']
       redirect '/'
    end
-
-   erb :login, :locals => {:user_count => User.count }
+   login_fail = (params['status'] == 'fail')
+   erb :login, :locals => {:user_count => User.count, :login_fail => login_fail}
 end
 
 post '/login' do
@@ -61,7 +61,7 @@ post '/login' do
       session.delete('previous')
       redirect redirectto
    else
-      redirect '/login'
+      redirect '/login?status=fail'
    end
 end
 

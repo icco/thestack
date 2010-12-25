@@ -31,6 +31,11 @@
          <%= erb(:header, :locals => {}) %> 
 
          <div id="main" class="clearfix">
+            <% if login_fail %>
+               <div id="status_bar" class="status_error">
+                  I'm sorry, we can not find you in the system.
+               </div>
+            <% end %>
             <div id="login">
                <form method="post">
                   <input type="text" alt="Username" id="user_box" name="user_name" />
