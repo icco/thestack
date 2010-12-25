@@ -30,6 +30,18 @@
          .overTxtLabel {
             padding: 5px;
          }
+
+         .formnotice {
+            position: absolute;
+            color: LightSlateGray;
+         }
+
+         .validation-advice {
+            left: 310px;
+            position: relative;
+            top: 11px;
+         }
+
       </style>
    </head>
    <body>
@@ -38,12 +50,22 @@
 
          <div id="main" class="clearfix">
             <div id="login">
-               <form method="post">
-                  <input type="text" alt="Username" id="user_box" name="user_name" />
-                  <input type="password" alt="Password" id="pw_box" name="password" />
-                  <input type="text" alt="email address" id="pw_box" name="email" />
-                  <input type="text" alt="Amazon SimpleDB Access Key" id="access_key" name="access_key" autocomplete="off" />
-                  <input type="text" alt="Amazon SimpleDB Secret" id="secret_key" name="secret_key" autocomplete="off" />
+               <form method="post" id="signupform">
+                  <div id="advice1" class="formnotice"></div>
+                  <input type="text" alt="Username" id="user_box" name="user_name" class="minLength:3 msgPos:'advice1'" />
+
+                  <div id="advice2" class="formnotice"></div>
+                  <input type="password" alt="Password" id="pw_box" name="password" class="required msgPos:'advice2'" />
+                  
+                  <div id="advice3" class="formnotice"></div>
+                  <input type="text" alt="email address" id="pw_box" name="email" class="validate-email msgPos:'advice3'" />
+                  
+                  <div id="advice4" class="formnotice"></div>
+                  <input type="text" alt="Amazon SimpleDB Access Key" id="access_key" name="access_key" autocomplete="off" class="required msgPos:'advice4'"/>
+                  
+                  <div id="advice5" class="formnotice"></div>
+                  <input type="text" alt="Amazon SimpleDB Secret" id="secret_key" name="secret_key" autocomplete="off" class="required msgPos:'advice5'" />
+                  
                   <input type="submit" value="sign up!" id="submit" />
                   <a href="/" id="cancel-button">nevermind...</a>
                </form>
@@ -62,6 +84,7 @@
       </div>
       <script>
          $$('input').each(function(el) { new OverText(el); });
+         v = new Form.Validator.Inline($('signupform'), { scrollToErrorsOnSubmit: false });
       </script>
    </body>
 </html>
