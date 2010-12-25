@@ -44,7 +44,5 @@ This list doesn't have any real order to it, just stuff I want to get done at so
  * Caching
    * even just session caching. The number of repeat queries is just silly.
  * Deal with mobile users. - mobile style sheet
- * Add verification on login and signup
- * add safe failover if amazon auth keys are wrong
  * make profile editable.
 
