@@ -35,6 +35,7 @@ task :db do
       primary_key :userid
       String   :username,  :default => ""
       String   :password,  :default => ""
+      String   :email,     :default => ""
       String   :accesskey, :default => ""
       String   :secretkey, :default => ""
       DateTime :joindate

@@ -11,6 +11,16 @@
             margin: 35px auto;
          }
 
+         #about {
+            width: 800px;
+            padding: 10px;
+            margin: 5px auto;
+         }
+
+         #about h3, #about p {
+            margin-bottom: 10px;
+         }
+
          #pw_box, #pw_box2, #user_box, #access_key, #secret_key {
             padding: 5px;
             width: 295px;
@@ -31,11 +41,21 @@
                <form method="post">
                   <input type="text" alt="Username" id="user_box" name="user_name" />
                   <input type="password" alt="Password" id="pw_box" name="password" />
-                  <input type="text" alt="Amazon SDB Access Key" id="access_key" name="access_key" />
-                  <input type="text" alt="Amazon SDB Secret Key" id="secret_key" name="secret_key" />
+                  <input type="text" alt="email address" id="pw_box" name="email" />
+                  <input type="text" alt="Amazon SimpleDB Access Key" id="access_key" name="access_key" />
+                  <input type="text" alt="Amazon SimpleDB Secret" id="secret_key" name="secret_key" />
                   <input type="submit" value="sign up!" id="submit" />
                   <a href="/" id="cancel-button">nevermind...</a>
                </form>
+            </div>
+
+            <div id="about">
+               <h3>Where can I find my Access Key and Secret?</h3>
+               <p>Visit your <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?ie=UTF8&amp;action=access-key">AWS Access Identifiers page</a> and look for your Access Key and Secret.</p>
+               
+               <h3>Is this secure?</h3>
+               <p>We will protect your key and secret and not share them with anyone. Really. And if all else fails, you can <a href="https://aws-portal.amazon.com/gp/aws/developer/account/index.html?ie=UTF8&amp;action=access-key">generate a new Access Key and Secret</a> at any time.</p>
+            </div>
          </div>
 
          <%= erb :footer %> 

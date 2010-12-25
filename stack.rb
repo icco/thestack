@@ -84,6 +84,7 @@ post '/signup' do
    u.secretkey = params[:secret_key]
    u.username  = params[:user_name]
    u.password  = params[:password]
+   u.email     = params[:email]
    u.joindate  = Time.now
    u.save
 
