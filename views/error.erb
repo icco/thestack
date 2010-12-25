@@ -1,0 +1,33 @@
+<html>
+   <head>
+      <title>Error - theStack!</title>
+      <%= erb :includes %> 
+      <style>
+         #search, #loginout { display: none; }
+         h3 { margin: 10px !important; }
+         p { margin: 7px 0; }
+      </style>
+   </head>
+   <body>
+      <div id="cont">
+         <%= erb(:header, :locals => {}) %> 
+
+         <div id="main" class="clearfix">
+            <h3>Amazon is returning the following errors at this time:</h3>
+            <% for error in errors %>
+               <div id="status_bar" class="status_error">
+                  <%= error[:msg] %>
+               </div>
+            <% end %>
+
+            <h3>What now?</h3>
+            <p>If this seems like a problem with your account settings (incorrect keys), go to <a href="/profile">your profile</a> and edit them.</p>
+            <p>If this sounds like an error with Amazon (their site is down, timeout issues), then I suggest going and getting a cup of coffee and trying again when you get back.</p>
+            <p>If you would like help with this error, <a href="https://github.com/icco/thestack/issues">post an issue on GitHub</a> or shoot me an email.</p>
+
+         </div>
+
+         <%= erb :footer %>
+      </div>
+   </body>
+</html>

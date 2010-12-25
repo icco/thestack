@@ -16,6 +16,7 @@ require 'aws'           # Rightscale's AWS library
 # Always run at launch
 configure do
    set :sessions, true
+   set :show_exceptions, false
    DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://tmp/theStack.db')
 
    # Print all queries to stdout
@@ -41,6 +42,20 @@ before do
       session['previous'] = request.path_info
       redirect '/login'
    end
+end
+
+error Aws::AwsError do
+   errors = env['sinatra.error'].errors
+
+   error_hashs = []
+   errors.each {|error|
+      error_hashs.push({
+         :name => error[0],
+         :msg  => error[1]
+      })
+   }
+
+   erb :error, :locals => {:errors => error_hashs }
 end
 
 get '/login' do
