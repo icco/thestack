@@ -30,7 +30,7 @@ I am incredibly forgetful. So here is a list of references for when I'm trying t
  * [SQLite](http://www.sqlite.org/sqlite.html)
  * [Markdown Dingus](http://daringfireball.net/projects/markdown/dingus)
  * [SDB Pricing Example](http://aws.amazon.com/simpledb/#machine-utilization-example)
- * [Right AWS Docs](http://rightscale.rubyforge.org/right_aws_gem_doc/classes/RightAws/SdbInterface.html)
+ * [AWS Docs](http://rubydoc.info/gems/aws/2.3.34/Aws/SdbInterface)
 
 ## TODO
 
