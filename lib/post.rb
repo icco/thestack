@@ -116,7 +116,7 @@ class Post
    def Post.getPosts userid
       db = User.get(userid).aws_db
       query = ["select * from #{@@domain} where date < ? order by date desc", Time.now.to_i ]
-      values = db.select(query)[:items]
+      values = db.select(query)[:items] if !db.nil?
 
       posts = []
       values.each {|result|
@@ -129,7 +129,7 @@ class Post
             p.postid = key
             posts.push(p)
          }
-      }
+      } if !values.nil?
 
       return posts
    end
