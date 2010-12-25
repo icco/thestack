@@ -8,21 +8,13 @@ class User < Sequel::Model(:users)
 
          db_options = {
             :server              => 'sdb.amazonaws.com',
-            :port                => 80,
-            :protocol            => 'http',
-            :signature_version   => '1',
-            :multi_thread        => false,
+            :port                => 443,
+            :protocol            => 'https',
             :nil_representation  => '',
             :logger              => sdblogger
          }
 
-         p self.accesskey
-         p self.secretkey
-         p self.username
-         p self.userid
-         p self.joindate
-
-         @aws_db = RightAws::SdbInterface.new(self.accesskey, self.secretkey, db_options)
+         @aws_db = Aws::SdbInterface.new(self.accesskey, self.secretkey, db_options)
       end
 
       return @aws_db

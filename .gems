@@ -5,4 +5,5 @@ sequel
 sqlite3-ruby
 differ
 guid
-right_aws
+aws
+i18n

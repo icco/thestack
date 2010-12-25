@@ -11,7 +11,7 @@ require 'differ'        # https://github.com/pvande/differ
 require 'logger'        # ...
 require 'time'          # Monkey patching for 1.9.2
 require 'guid'          # For unique ids in SDB (we could implement this ourselves...)
-require 'right_aws'     # Rightscale's AWS library
+require 'aws'           # Rightscale's AWS library
 
 # Always run at launch
 configure do
