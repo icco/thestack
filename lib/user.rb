@@ -16,6 +16,12 @@ class User < Sequel::Model(:users)
             :logger              => sdblogger
          }
 
+         p self.accesskey
+         p self.secretkey
+         p self.username
+         p self.userid
+         p self.joindate
+
          @aws_db = RightAws::SdbInterface.new(self.accesskey, self.secretkey, db_options)
       end
 
