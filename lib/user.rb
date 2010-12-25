@@ -8,10 +8,10 @@ class User < Sequel::Model(:users)
 
          db_options = {
             :server              => 'sdb.amazonaws.com',
-            :port                => 443,
-            :protocol            => 'https',
+            :port                => 80,
+            :protocol            => 'http',
             :signature_version   => '1',
-            :multi_thread        => true,
+            :multi_thread        => false,
             :nil_representation  => '',
             :logger              => sdblogger
          }
