@@ -1,10 +1,12 @@
 # theStack!
 
-THIS BRANCH IS HORRIBLY BROKEN AND NOT WORKING.
-
 A simple app to help you remember your ideas. The two main constraints on this are that your data is always available, no matter the device, and that you personally own the data. Imagine a stack of notes that sits in your pocket, but you need a pair of glasses to read, or something like that. The analogy kind of fails, I know.
 
 Orginally inspired by [the data structure][1]... but let's be honest, it is entirely unrelated now.
+
+## Heroku and SimpleDB
+
+I rewrote large portions of this app so I could host the app and deal with all of the icky stuff, but still allow users to own their own data (and pay for it too, I'm broke). The app is still very alpha and in no way secure, but it should work.
 
 ## Installation 
 
@@ -34,7 +36,6 @@ I am incredibly forgetful. So here is a list of references for when I'm trying t
 
 This list doesn't have any real order to it, just stuff I want to get done at some point. 
 
- * tag posts
  * upload image to third party image host
    * could be basically a type of children
  * related posts
@@ -42,11 +43,8 @@ This list doesn't have any real order to it, just stuff I want to get done at so
  * Add support for adding children
  * Caching
    * even just session caching. The number of repeat queries is just silly.
- * Maybe make it hosted? 
-   * Add user support
-      * would the entire site be private for that user?
- * Deal with mobile users.
-   * I mean if the thing is hosted, then you could just go to a page, or I could write and API and have others write clients.
-   * The best solution is to mirror baccon file
-      * upside, low cost for me
-      * downside, limits adoption because users need an amazon sdb account...
+ * Deal with mobile users. - mobile style sheet
+ * Add verification on login and signup
+ * add safe failover if amazon auth keys are wrong
+ * make profile editable.
+
