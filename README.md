@@ -45,4 +45,7 @@ This list doesn't have any real order to it, just stuff I want to get done at so
    * even just session caching. The number of repeat queries is just silly.
  * Deal with mobile users. - mobile style sheet
  * make profile editable.
+ * Change UI to focus more on journaling than notes. This is similar to what I was doing already, but change the UI a little.
+ * allow uploading of files
+   * submital from vim?
 
