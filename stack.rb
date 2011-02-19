@@ -37,7 +37,7 @@ end
 before do
    # Alright plan for users
    # first, check if they are logged in
-   no_pw = /(login|signup|css|js|png|jpg)/
+   no_pw = /(login|signup|css|js|png|jpg|ico)/
    if !session.has_key?('userid') && !request.path_info.match(no_pw)
       session['previous'] = request.path_info
       redirect '/login'
@@ -114,12 +114,26 @@ get '/' do
 end
 
 post '/' do
-   # Validation is done by the Post object.
-   text = params[:text]
+   p = Post.new session['userid']
+
    title = params[:title]
 
+   # Deal with file upload...
+   if params[:file]
+      tmpfile = params[:file][:tempfile]
+      name = params[:file][:filename]
+
+      STDERR.puts "Uploading file, original name #{name.inspect}"
+      while blk = tmpfile.read(65536)
+         # here you would write it to its final location
+         text = blk.to_s
+      end
+   else
+      # Validation is done by the Post object.
+      text = params[:text]
+   end
+
    # Build and save the object
-   p = Post.new session['userid']
    p.text = text
    p.title = title
    p.date = Time.now.to_i
@@ -127,7 +141,7 @@ post '/' do
    p.save
 
    # We've saved. Get the hell out of here.
-   redirect "/view/#{p.postid}";
+   redirect "/view/#{p.postid}"
 end
 
 get '/view/:id' do

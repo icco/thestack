@@ -145,6 +145,33 @@ body {
       margin-bottom: 10px;
    }
 
+   #tabs {
+
+      .tab {
+         margin-right: 4px;
+         padding: 5px;
+         -moz-border-radius: 4px 4px 0 0;
+         border: none;
+         float: left;
+         cursor: pointer;
+      }
+
+      .tab, .ontab:hover {
+         background-color: silver;
+         color: white;
+      }
+
+      .ontab, .tab:hover {
+         background-color: white;
+         color: black;
+      }
+   }
+
+   .tabContent {
+      padding: 2px;
+      border: 1px solid silver;
+   }
+
    #header {
       font-size: 80%;
       font-family: Arial, Helvetica, sans-serif;

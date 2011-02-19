@@ -10,7 +10,8 @@ class User < Sequel::Model(:users)
             :server              => 'sdb.amazonaws.com',
             :port                => 443,
             :protocol            => 'https',
-            :nil_representation  => '',
+            :signature_version   => '2',
+            :nil_representation  => ' ',
             :logger              => sdblogger
          }
 

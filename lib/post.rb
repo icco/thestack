@@ -34,8 +34,12 @@ class Post
          'text' => self.text,
          'title' => self.title,
          'date' => self.date,
-         'tags' => self.tags,
+         'tags' => self.tags, # fails when empty...
       }
+
+      p @@domain 
+      p self.postid
+      p attr
 
       @db.put_attributes(@@domain, self.postid, attr, :replace)
 

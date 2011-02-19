@@ -8,13 +8,29 @@
          <%= erb(:header, :locals => {:search => "" }) %> 
 
          <div id="main">
-            <form class="post-form" method="post">
-               <input type="text" name="title" alt="New thought..." id="title-input" />
-               <textarea name="text" id="text-input" alt="Put thought here (Formatting language is Markdown)."></textarea>
-               <input type="text" name="tags" alt="Space seperated tags" id="tags-input" />
-               <input id="submit" type="submit" value="push" />
-            </form>
-            <div class="clearfix"></div>
+            <div id="top" class="clearfix">
+               <div id="tabs" class="clearfix">
+                  <div id="tab1" class="tab ontab">Write</div>
+                  <div id="tab2" class="tab">Upload</div>
+               </div>
+
+               <div id="tab1-content" class="tabContent">
+                  <form class="post-form" method="post">
+                     <input type="text" name="title" alt="New thought..." id="title-input" />
+                     <textarea name="text" id="text-input" alt="Put thought here (Formatting language is Markdown)."></textarea>
+                     <input type="text" name="tags" alt="Space seperated tags" id="tags-input" />
+                     <input id="submit" type="submit" value="push" />
+                  </form>
+               </div>
+               <div id="tab2-content" class="tabContent">
+                  <form class="post-form" method="post" enctype="multipart/form-data">
+                     <input type="text" name="title" alt="New thought..." id="title-input" />
+                     <input type="file" name="file" size="120"> 
+                     <input type="text" name="tags" alt="Space seperated tags" id="tags-input" />
+                     <input id="submit" type="submit" value="push" />
+                  </form>
+               </div>
+            </div>
 
             <h2 id="recent">Most recent thoughts</h2>
             <%= erb(:thoughts, :locals => {:posts => posts}) %> 
